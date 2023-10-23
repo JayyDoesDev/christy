@@ -5,6 +5,8 @@ import glob from "glob";
 import path from "path";
 import { Timer } from "../utils/Timer";
 import { MessageUtil } from "../utils/MessageUtil";
+import { nanoid } from "nanoid";
+import { Redis } from "../utils/Redis";
 
 export default function (ctx: Context): void {
   let events: string[] = glob.sync("./dist/core/events/**/**/*.js");
@@ -26,23 +28,34 @@ export default function (ctx: Context): void {
   }
   const userId: string = "802438374240550942";
   const guildId: string = "845605014663856158";
-  const message: string = MessageUtil.Success(
-    "**A wild {item} has spawned! Claim it with `/claim {id}`!**"
-  );
+  const redisTimerIdentifier: string = "candy";
+  const redisKey: string = "christy";
+  const redisIdentifier: string = "code";
   setInterval(async () => {
+    const goodies: string[] = ["present", "candy"];
+    const goodie = goodies[Math.floor(Math.random() * goodies.length)];
+    const id: string = nanoid(7);
+    const redisValue: string = `${nanoid(7)}:${goodie}`;
+    const message: string = MessageUtil.Success(
+      `**A wild ${goodify(
+        goodie
+      )} has spawned! Claim it with \`/claim ${id}\`!**`
+    );
     const channel: Channel | any = ctx.channels.cache.get("984197100021624852");
     const timers: number[] = [20000]; //[3600000, 7200000, 10800000];
-    if (await Timer.exists(userId, guildId, "candy")) {
+    console.log(redisValue.slice(0, 7));
+    console.log(redisValue.slice(8, redisValue.length));
+    if (await Timer.exists(userId, guildId, redisTimerIdentifier)) {
       console.log("Timer does exist");
-      if (await Timer.expired(userId, guildId, "candy")) {
-        console.log("Timer is expired");
+      if (await Timer.expired(userId, guildId, redisTimerIdentifier)) {
+        Redis.set(redisKey, redisKey, redisIdentifier);
         channel.send({
           content: message,
         });
         return await Timer.start(
           userId,
           guildId,
-          "candy",
+          redisTimerIdentifier,
           timers[Math.floor(Math.random() * timers.length)]
         );
       } else {
@@ -50,16 +63,24 @@ export default function (ctx: Context): void {
         return;
       }
     } else {
-      console.log("Timer doesn't exist");
+      Redis.set(redisKey, redisValue, redisIdentifier);
       channel.send({
         content: message,
       });
       return await Timer.start(
         userId,
         guildId,
-        "candy",
+        redisTimerIdentifier,
         timers[Math.floor(Math.random() * timers.length)]
       );
     }
   }, 10000);
+}
+
+function goodify(goodie: string): string {
+  if (goodie === "present") {
+    return "<:present:1165862478018773013> present";
+  } else if (goodie === "candy") {
+    return "<:candy:1165849590415753287> candy";
+  }
 }
