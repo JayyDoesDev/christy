@@ -27,7 +27,7 @@ export class Context extends Client {
       publicKey: process.env.PUBLICKEY,
       botID: process.env.BOTID,
       botToken: process.env.TOKEN,
-      debug: true,
+      debug: false,
     });
   }
 }

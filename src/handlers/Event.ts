@@ -37,9 +37,7 @@ export default function (ctx: Context): void {
     const goodie = goodies[Math.floor(Math.random() * goodies.length)];
     const id: string = nanoid(7);
     const redisValue: string = `${nanoid(7)}:${goodie}`;
-    const channel: Channel | any = ctx.channels.cache.get(
-      "1153109176902488064"
-    );
+    const channel: Channel | any = ctx.channels.cache.get("984197100021624852");
     const timers: number[] = [3600000, 7200000, 10800000]; //[3600000, 7200000, 10800000];
     if (await Timer.exists(userId, guildId, redisTimerIdentifier)) {
       console.log("Timer does exist");

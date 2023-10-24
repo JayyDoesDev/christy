@@ -8,6 +8,7 @@ import { Context } from "../../../structures/Context";
 import { Redis } from "../../../utils/Redis";
 import { MessageUtil } from "../../../utils/MessageUtil";
 import { goodify } from "../../../utils/goodify";
+import { GoodieController } from "../../../controllers/GoodieController";
 
 export default class ClaimCommand extends Command {
   constructor(ctx: Context) {
@@ -46,14 +47,29 @@ export default class ClaimCommand extends Command {
         getRedisValue.length
       );
       if (input === getRedisClaimID) {
-         await interaction.reply({
+        if (getRedisGoodie === "present") {
+          if (await GoodieController.findUser(interaction.user.id)) {
+            await GoodieController.incrementPresent(interaction.user.id);
+          } else {
+            await GoodieController.createUser(interaction.user.id);
+            await GoodieController.incrementPresent(interaction.user.id);
+          }
+        } else {
+          if (await GoodieController.findUser(interaction.user.id)) {
+            await GoodieController.incrementCandy(interaction.user.id);
+          } else {
+            await GoodieController.createUser(interaction.user.id);
+            await GoodieController.incrementCandy(interaction.user.id);
+          }
+        }
+        await interaction.reply({
           content: MessageUtil.Success(
             `**Congratulations, you have claimed a ${goodify(
               getRedisGoodie
             )} from ${getRedisClaimID}! View your inventory using \`/inventory\`!**`
           ),
         }) as any;
-        return await Redis.deleteKey(redisKey, redisIdentifier)
+        return await Redis.deleteKey(redisKey, redisIdentifier);
       } else {
         return await interaction.reply({
           content: MessageUtil.Error(
@@ -62,11 +78,11 @@ export default class ClaimCommand extends Command {
         }) as any;
       }
     } else {
-        return await interaction.reply({
-          content: MessageUtil.Error(
-            "**Sorry, this code doesn't seem to exist! This code as either been claimed or a new code needs to be generated again!**"
-          ),
-        }) as any;
+      return await interaction.reply({
+        content: MessageUtil.Error(
+          "**Sorry, this code doesn't seem to exist! This code as either been claimed or a new code needs to be generated again!**"
+        ),
+      }) as any;
     }
   }
 }
