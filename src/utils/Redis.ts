@@ -12,7 +12,7 @@ export namespace Redis {
     identifier: string
   ): Promise<void> {
     const formattedKey: string = `${key}:${identifier}`;
-    redis.set(formattedKey, value);
+    await redis.set(formattedKey, value);
   }
 
   export async function get(
@@ -20,14 +20,16 @@ export namespace Redis {
     identifier: string
   ): Promise<string | any> {
     const formattedKey: string = `${key}:${identifier}`;
-    redis.get(formattedKey);
+    console.log(await redis.get(formattedKey));
+    return await redis.get(formattedKey);
   }
 
   export async function exists(
     key: string,
     identifier: string
   ): Promise<boolean> {
-    if (await redis.exists(key)) {
+    const formattedKey: string = `${key}:${identifier}`;
+    if (await redis.exists(formattedKey)) {
       return true;
     } else {
       return false;
@@ -39,6 +41,6 @@ export namespace Redis {
     identifier: string
   ): Promise<void> {
     const formattedKey: string = `${key}:${identifier}`;
-    redis.del(formattedKey);
+    await redis.del(formattedKey);
   }
 }

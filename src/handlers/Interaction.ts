@@ -19,6 +19,6 @@ export default function (ctx: Context): void {
     }
   }
   ctx.interactions.forEach((x) => {
-    ctx.interact.createGuildCommand("845605014663856158", x.interaction);
+    ctx.interact.createGuildCommand("1135377557789868055", x.interaction);
   });
 }
