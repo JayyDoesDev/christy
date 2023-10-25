@@ -1,7 +1,8 @@
-import { Interaction } from "discord.js";
+import { APIUser, Interaction, User } from "discord.js";
 import {
   ApplicationCommandType,
   ApplicationCommandOptionType,
+  Snowflake,
 } from "@antibot/interactions";
 import { Command } from "../../../structures/Command";
 import { Context } from "../../../structures/Context";
@@ -15,11 +16,13 @@ export default class LeaderboardCommand extends Command {
   constructor(ctx: Context) {
     super(ctx, {
       name: "leaderboard",
-      description: "View the leaderboard for who has the most candies and presents combined!",
+      description:
+        "View the leaderboard for who has the most candies and presents combined!",
       interaction: {
         name: "leaderboard",
         type: ApplicationCommandType.CHAT_INPUT,
-        description: "View the leaderboard for who has the most candies and presents combined!",
+        description:
+          "View the leaderboard for who has the most candies and presents combined!",
         options: [],
       },
     });
@@ -37,30 +40,41 @@ export default class LeaderboardCommand extends Command {
         return a.presentCount + a.candyCount - (b.presentCount + b.candyCount);
       }
     );
-    console.log(sorttedDocuments);
     return (await interaction.reply({
       content: MessageUtil.Success(
         "**Leaderboard! All presents and candies are added up into goodies!**"
       ),
       embeds: [
         {
-          color: 1338170,
-          description: MessageUtil.colorfulBlock(
-            `\u001b[0;33mServer Leaderboard\u001b[0;0m\n${sorttedDocuments
-              .slice(0, 10)
-              .reverse()
-              .map(
-                (x, i) =>
-                  `\u001b[0;32m${i + 1}. ${
-                    x.User
-                  }\n\u001b[0;31mGoodies Collected: \u001b[0;37m${
-                    x.presentCount + x.candyCount
-                  }\u001b[0;0m`
-              )
-              .join("\n")}`
-          ),
+          thumbnail: {
+            url: interaction.guild.iconURL({ forceStatic: true })
+          },
+          color: 5793266,
+          title: "Server Leaderboard",
+          description: `**The top 10 users with the most goodies!**\n${(
+            await Promise.all(
+              sorttedDocuments
+                .slice(0, 10)
+                .reverse()
+                .map(async (x, i) => {
+                  const user = await this.ctx.users.fetch(String(x.User));
+                  return `**${this.randomGoodie()} ${i + 1}. ${
+                    user.username
+                  } (${x.presentCount + x.candyCount})**`;
+                })
+            )
+          ).join("\n")}`,
         },
       ],
     })) as any;
+  }
+
+  randomGoodie(): string {
+    const goodies: string[] = ["present", "candy"];
+    if (goodies[Math.floor(Math.random() * goodies.length)] === "present") {
+      return "<:present:1165862478018773013>";
+    } else {
+      return "<:candy:1165849590415753287>";
+    }
   }
 }

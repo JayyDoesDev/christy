@@ -35,7 +35,6 @@ export default function (ctx: Context): void {
   setInterval(async () => {
     const goodies: string[] = ["present", "candy"];
     const goodie = goodies[Math.floor(Math.random() * goodies.length)];
-    const id: string = nanoid(7);
     const redisValue: string = `${nanoid(7)}:${goodie}`;
     const channel: Channel | any = ctx.channels.cache.get("984197100021624852");
     const timers: number[] = [3600000, 7200000, 10800000]; //[3600000, 7200000, 10800000];
@@ -77,7 +76,6 @@ export default function (ctx: Context): void {
           )} has spawned! Claim it with \`/claim ${getRedisClaimID}\`!**`
         ),
       });
-      console.log(await Redis.get(redisKey, redisIdentifier));
       return await Timer.start(
         userId,
         guildId,
