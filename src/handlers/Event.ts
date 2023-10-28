@@ -27,8 +27,8 @@ export default function (ctx: Context): void {
         : ctx.on(file.name, (...args) => file.onEvent(...args));
     }
   }
-  const userId: string = "802438374240550942";
-  const guildId: string = "845605014663856158";
+  const userId: string = process.env.BOTID;
+  const guildId: string = process.env.GUILDID;
   const redisTimerIdentifier: string = "candy";
   const redisKey: string = "christy";
   const redisIdentifier: string = "code";
@@ -36,7 +36,9 @@ export default function (ctx: Context): void {
     const goodies: string[] = ["present", "candy"];
     const goodie = goodies[Math.floor(Math.random() * goodies.length)];
     const redisValue: string = `${nanoid(7)}:${goodie}`;
-    const channel: Channel | any = ctx.channels.cache.get("984197100021624852");
+    const channel: Channel | any = ctx.channels.cache.get(
+      process.env.DROPCHANNEL
+    );
     const timers: number[] = [3600000, 7200000, 10800000]; //[3600000, 7200000, 10800000];
     if (await Timer.exists(userId, guildId, redisTimerIdentifier)) {
       console.log("Timer does exist");
@@ -85,4 +87,3 @@ export default function (ctx: Context): void {
     }
   }, 10000);
 }
-
