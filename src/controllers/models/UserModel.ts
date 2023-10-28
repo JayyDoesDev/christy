@@ -4,6 +4,7 @@ interface UserDocument extends Document {
   User: string;
   presentCount: number;
   candyCount: number;
+  snowballCount: number;
 }
 
 const UserModel: Schema = new Schema(
@@ -11,6 +12,7 @@ const UserModel: Schema = new Schema(
     User: String,
     presentCount: { type: Number, default: 0 },
     candyCount: { type: Number, default: 0 },
+    snowballCount: { type: Number, default: 0 },
   },
   {
     versionKey: false,

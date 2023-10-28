@@ -18,12 +18,13 @@ export namespace GoodieController {
 
   export async function getUser(
     userId: Snowflake
-  ): Promise<{ User: string; presentCount: number; candyCount: number }> {
+  ): Promise<{ User: string; presentCount: number; candyCount: number; snowballCount: number; }> {
     const data = await UserModel.findOne({ User: userId });
     return {
       User: data.User,
       presentCount: data.presentCount,
       candyCount: data.candyCount,
+      snowballCount: data.snowballCount
     };
   }
 
@@ -53,5 +54,19 @@ export namespace GoodieController {
         new: true,
       }
     );
+  }
+
+  export async function incrementSnowball(userId: Snowflake): Promise<void> {
+    await UserModel.updateOne(
+      {
+        User: userId
+      },
+      {
+        $inc: { snowballCount: 1 },
+      },
+      {
+        new: true
+      }
+    )
   }
 }
