@@ -20,6 +20,6 @@ export default function (ctx: Context): void {
   }
 
   ctx.interactions.forEach(async (x) => {
-    await ctx.interact.createGuildCommand("845605014663856158", x.interaction);
+    await ctx.interact.createGuildCommand(process.env.GUILDID, x.interaction);
   });
 }
