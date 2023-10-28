@@ -8,4 +8,4 @@
 <p align="center">
    <img src="https://github.com/JayyDoesDev/christy/blob/main/.github/assets/Discord_GArwcAEKHt.gif" alt="showcase">
 </p>
-<h4 align="center">⭐ Made by JayyDoesDev ⭐</h4>
+<h4 align="center">&copy JayyDoesDev</h4>
