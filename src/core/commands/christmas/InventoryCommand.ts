@@ -28,10 +28,10 @@ export default class InventoryCommand extends Command {
     if (!interaction.isCommand()) {
       return;
     }
-
+    await interaction.deferReply();
     if (await GoodieController.findUser(interaction.user.id)) {
       const data = await GoodieController.getUser(interaction.user.id);
-      return (await interaction.reply({
+      return (await interaction.editReply({
         content: MessageUtil.Success(
           "**<:candy:1165849590415753287> Here is your inventory! <:present:1165862478018773013>**"
         ),
@@ -54,7 +54,7 @@ export default class InventoryCommand extends Command {
     } else {
       await GoodieController.createUser(interaction.user.id);
       const data = await GoodieController.getUser(interaction.user.id);
-      return (await interaction.reply({
+      return (await interaction.editReply({
         content: MessageUtil.Success(
           "**<:candy:1165849590415753287> Here is your inventory! <:present:1165862478018773013>**"
         ),

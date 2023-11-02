@@ -36,6 +36,7 @@ export default class ClaimCommand extends Command {
     if (!interaction.isCommand()) {
       return;
     }
+    await interaction.deferReply();
     const redisKey: string = "christy";
     const redisIdentifier: string = "code";
     if (await Redis.exists(redisKey, redisIdentifier)) {
@@ -62,27 +63,42 @@ export default class ClaimCommand extends Command {
             await GoodieController.incrementCandy(interaction.user.id);
           }
         }
-        await interaction.reply({
+        (await interaction.editReply({
           content: MessageUtil.Success(
-            `**Congratulations, you have claimed a ${goodify(
-              getRedisGoodie
-            )} from ${getRedisClaimID}! View your inventory using \`/inventory\`!**`
+            `**Congratulations, you have claimed a ${
+              getRedisGoodie === "present" ? "present" : "candy"
+            }! View your inventory using \`/inventory\`!**`
           ),
-        }) as any;
+          embeds: [
+            {
+              title: "Claimed!",
+              color: getRedisGoodie === "present" ? 0x515a91 : 0xff6377,
+              description: `**<a:bell:1169443376714760192> The latest ${
+                getRedisGoodie === "present" ? "present" : "candy"
+              } has been claimed! <a:bell:1169443376714760192>**`,
+              thumbnail: {
+                url:
+                  getRedisGoodie === "present"
+                    ? "https://raw.githubusercontent.com/JayyDoesDev/christy/main/.github/assets/present.png"
+                    : "https://raw.githubusercontent.com/JayyDoesDev/christy/main/.github/assets/candy.png",
+              },
+            },
+          ],
+        })) as any;
         return await Redis.deleteKey(redisKey, redisIdentifier);
       } else {
-        return await interaction.reply({
+        return (await interaction.editReply({
           content: MessageUtil.Error(
             "**Sorry, this code doesn't seem to exist! This code as either been claimed or a new code needs to be generated again!**"
           ),
-        }) as any;
+        })) as any;
       }
     } else {
-      return await interaction.reply({
+      return (await interaction.editReply({
         content: MessageUtil.Error(
           "**Sorry, this code doesn't seem to exist! This code as either been claimed or a new code needs to be generated again!**"
         ),
-      }) as any;
+      })) as any;
     }
   }
 }

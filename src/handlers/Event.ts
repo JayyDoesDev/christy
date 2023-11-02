@@ -50,11 +50,18 @@ export default function (ctx: Context): void {
         );
         const getRedisClaimID: string = getRedisValue.slice(0, 7);
         channel.send({
-          content: MessageUtil.Success(
-            `**A wild ${goodify(
-              goodie
-            )} has spawned! Claim it with \`/claim ${getRedisClaimID}\`!**`
-          ),
+          embeds: [
+            {
+              description: `**${
+                goodie === "present"
+                  ? "<:present:1165862478018773013>"
+                  : "<:candy:1165849590415753287>"
+              } A wild ${
+                goodie === "present" ? "present" : "candy"
+              } has spawned! Claim it with \`/claim ${getRedisClaimID}\`!**`,
+              color: goodie === "present" ? 0x515a91 : 0xff6377,
+            },
+          ],
         });
         console.log(await Redis.get(redisKey, redisIdentifier));
         return await Timer.start(
@@ -72,11 +79,18 @@ export default function (ctx: Context): void {
       const getRedisValue: string = await Redis.get(redisKey, redisIdentifier);
       const getRedisClaimID: string = getRedisValue.slice(0, 7);
       channel.send({
-        content: MessageUtil.Success(
-          `**A wild ${goodify(
-            goodie
-          )} has spawned! Claim it with \`/claim ${getRedisClaimID}\`!**`
-        ),
+        embeds: [
+          {
+            description: `**${
+              goodie === "present"
+                ? "<:present:1165862478018773013>"
+                : "<:candy:1165849590415753287>"
+            } A wild ${
+              goodie === "present" ? "present" : "candy"
+            } has spawned! Claim it with \`/claim ${getRedisClaimID}\`!**`,
+            color: goodie === "present" ? 0x515a91 : 0xff6377,
+          },
+        ],
       });
       return await Timer.start(
         userId,

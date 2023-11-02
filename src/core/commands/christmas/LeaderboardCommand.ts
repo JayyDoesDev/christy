@@ -32,7 +32,7 @@ export default class LeaderboardCommand extends Command {
     if (!interaction.isCommand()) {
       return;
     }
-
+    await interaction.deferReply();
     const collection = await UserModel.db.collection("users");
     const documents = await collection.find({}).toArray();
     const sorttedDocuments: Record<string, number>[] = documents.sort(
@@ -40,7 +40,7 @@ export default class LeaderboardCommand extends Command {
         return a.presentCount + a.candyCount - (b.presentCount + b.candyCount);
       }
     );
-    return (await interaction.reply({
+    return (await interaction.editReply({
       content: MessageUtil.Success(
         "**Leaderboard! All presents and candies are added up into goodies!**"
       ),

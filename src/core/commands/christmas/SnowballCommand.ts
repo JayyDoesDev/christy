@@ -46,18 +46,18 @@ export default class SnowballCommand extends Command {
       return;
     }
     const subCommand: string = interaction.options.getSubcommand();
-
     if (subCommand === "count") {
+      await interaction.deferReply();
       const user = await GoodieController.getUser(interaction.user.id);
       if (user) {
         if (user.snowballCount === 0) {
-          return interaction.reply({
+          return interaction.editReply({
             content: MessageUtil.Success(
               "**You have never snowballed anyone before!**"
             ),
           }) as any;
         }
-        interaction.reply({
+        interaction.editReply({
           content: MessageUtil.Success(
             `${
               user.snowballCount === 1
@@ -70,13 +70,13 @@ export default class SnowballCommand extends Command {
         await GoodieController.createUser(interaction.user.id);
         const user = await GoodieController.getUser(interaction.user.id);
         if (user.snowballCount === 0) {
-          return interaction.reply({
+          return interaction.editReply({
             content: MessageUtil.Success(
               "**You have never snowballed anyone before!**"
             ),
           }) as any;
         }
-        interaction.reply({
+        interaction.editReply({
           content: MessageUtil.Success(
             `${
               user.snowballCount === 1
@@ -87,13 +87,14 @@ export default class SnowballCommand extends Command {
         });
       }
     } else {
+      await interaction.deferReply();
       const user: User = interaction.options.getUser("user");
       if (user.id === interaction.user.id) {
-        interaction.reply({
+        interaction.editReply({
           content: MessageUtil.Success("**You can't snowball your self! 😭**"),
         });
       } else if (user.id === this.ctx.user.id) {
-        interaction.reply({
+        interaction.editReply({
           content: MessageUtil.Success("**Don't snowball me! 😭**"),
         });
       } else {
@@ -103,7 +104,7 @@ export default class SnowballCommand extends Command {
           await GoodieController.createUser(interaction.user.id);
           await GoodieController.incrementSnowball(interaction.user.id);
         }
-        interaction.reply({
+        interaction.editReply({
           content: MessageUtil.Success(
             `**<:snowball:1169101537973387306> ${interaction.user.username}** has snowballed **${user.username}**!`
           ),
