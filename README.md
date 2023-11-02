@@ -8,4 +8,12 @@
 <p align="center">
    <img src="https://github.com/JayyDoesDev/christy/blob/main/.github/assets/Discord_GArwcAEKHt.gif" alt="showcase">
 </p>
+
+<h2 align="left">Credits</h2>
+<h3 align="left">No Text To Speech (Host)</h3>
+<h3 align="left">JayyDoesDev (Head Developer)</h3>
+<h3 align="left">Tazhys (Consultant)</h3>
+<h3 align="left">Jenku (Designer & Conceptualizer)</h3>
+<h3 align="left">Lavernie (Conceptualizer & Server Administrator)</h3>
+<h3 align="left">Ccet (Conceptualizer)</h3>
 <h4 align="center">&copy JayyDoesDev</h4>
