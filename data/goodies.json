@@ -1,1 +1,11 @@
-{}
+[
+    {
+        "blue-present": {
+            "type": "present",
+            "name": "Blue Present",
+            "color": "0x515a91",
+            "emoji": "<:present:1165862478018773013>",
+            "fileNameAndExtension": "blue-present.png"
+        }
+    }
+]
