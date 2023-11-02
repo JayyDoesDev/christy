@@ -71,10 +71,10 @@ export default class LeaderboardCommand extends Command {
 
   randomGoodie(): string {
     const goodies: string[] = ["present", "candy"];
-    if (goodies[Math.floor(Math.random() * goodies.length)] === "present") {
-      return "<:present:1165862478018773013>";
-    } else {
-      return "<:candy:1165849590415753287>";
-    }
+    let string: string = "";
+    goodies[Math.floor(Math.random() * goodies.length)] === "present"
+      ? string = "<:present:1165862478018773013>"
+      : string = "<:candy:1165849590415753287>"; 
+      return string;
   }
 }

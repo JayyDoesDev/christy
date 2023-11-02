@@ -105,7 +105,7 @@ export default class SnowballCommand extends Command {
         }
         interaction.reply({
           content: MessageUtil.Success(
-            `**${interaction.user.username}** has snowballed **${user.username}**!`
+            `**<:snowball:1169101537973387306> ${interaction.user.username}** has snowballed **${user.username}**!`
           ),
         });
       }
