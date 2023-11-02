@@ -15,6 +15,6 @@
 <h3 align="left">Tazhys (Consultant)</h3>
 <h3 align="left">Jenku (Designer, Conceptualizer and Event Organizer)</h3>
 <h3 align="left">Lavernie (Designer & Conceptualizer)</h3>
-<h3 align="left">Ccet (Conceptualizer, Events Team Member)</h3>
+<h3 align="left">Ccet (Conceptualizer, Events Organizer)</h3>
 <h3 align="left">ImgEagle (Data Contributor & Event Organizer)</h3>
 <h4 align="center">&copy JayyDoesDev</h4>
