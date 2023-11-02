@@ -4,72 +4,126 @@
       "type": "present",
       "name": "Blue Present",
       "color": "0x515a91",
-      "emoji": "<:present:1165862478018773013>",
-      "fileNameAndExtension": "blue-present.png"
+      "emoji": "<:bluepresent:1165862478018773013>",
+      "fileNameAndExtension": "blue-present.png",
+      "quotes": [
+        "The blue box holds promises of enchantment and discovery.",
+        "Unveil the magic within the captivating blue box of wonders.",
+        "Let the calming allure of the blue box soothe your senses.",
+        "Dive into the ocean of possibilities concealed in the blue box."
+      ]
     },
     {
       "technicalName": "gray-present",
       "type": "present",
       "name": "Gray Present",
       "color": "0xa5a7a8",
-      "emoji": ".",
-      "fileNameAndExtension": "gray-present.png"
+      "emoji": "<:graypresent:1169741287038140496>",
+      "fileNameAndExtension": "gray-present.png",
+      "quotes": [
+        "Curiosity piqued as the gray box beckons with its mysterious contents.",
+        "The elegant gray box conceals a world of surprises within.",
+        "Unveil the charm of simplicity with the enigmatic gray box.",
+        "Discover the understated elegance nestled within the gray box."
+      ]
     },
     {
       "technicalName": "ikea-present",
       "type": "present",
       "name": "Ikea Present",
       "color": "0x70bbdf",
-      "emoji": ".",
-      "fileNameAndExtension": "ikea-present.png"
+      "emoji": "<:ikeapresent:1169741361612865576>",
+      "fileNameAndExtension": "ikea-present.png",
+      "quotes": [
+        "Embrace the art of assembly with the IKEA box, filled with endless possibilities.",
+        "Discover the essence of practicality and creativity inside the IKEA box.",
+        "Let the IKEA box unlock your inner architect and designer.",
+        "Experience the joy of creation with the innovative IKEA box."
+      ]
     },
     {
       "technicalName": "light-blue-present",
       "type": "present",
       "name": "Light Blue Present",
       "color": "0xa2c7d1",
-      "emoji": ".",
-      "fileNameAndExtension": "light-blue-present.png"
+      "emoji": "<:lightbluepresent:1169741363747762297>",
+      "fileNameAndExtension": "light-blue-present.png",
+      "quotes": [
+        "The light blue box whispers of serenity and delightful surprises within.",
+        "Let the light blue box transport you to a world of tranquil delights.",
+        "Embrace the soothing comfort emanating from the light blue box.",
+        "Unveil the secrets of calmness hidden within the light blue box."
+      ]
     },
     {
       "technicalName": "light-green-present",
       "type": "present",
       "name": "Light Green Present",
       "color": "0xd2cfac",
-      "emoji": ".",
-      "fileNameAndExtension": "light-green-present.png"
+      "emoji": "<:lightgreenpresent:1169741365521940481>",
+      "fileNameAndExtension": "light-green-present.png",
+      "quotes": [
+        "Unveil the wonders concealed within the light green box of joy and possibilities.",
+        "Unlock the serenity and freshness tucked away in the light green box.",
+        "Feel the rejuvenating energy held within the light green box.",
+        "Let the light green box infuse your life with vibrant tranquility."
+      ]
     },
     {
       "technicalName": "light-purple-present",
       "type": "present",
       "name": "Light Purple Present",
       "color": "0x766396",
-      "emoji": ".",
-      "fileNameAndExtension": "light-purple-present.png"
+      "emoji": "<:lightpurplepresent:1169741368856416256>",
+      "fileNameAndExtension": "light-purple-present.png",
+      "quotes": [
+        "Embrace the magic and mystique contained within the light purple box.",
+        "Discover the enchanting harmony woven into the light purple box.",
+        "Let the light purple box envelop you in its ethereal charm.",
+        "Unveil the wistful whispers hidden within the light purple box."
+      ]
     },
     {
       "technicalName": "pink-present",
       "type": "present",
       "name": "Pink Present",
       "color": "0xeb94e8",
-      "emoji": ".",
-      "fileNameAndExtension": "pink-present.png"
+      "emoji": "<:pinkpresent:1169741370278281217>",
+      "fileNameAndExtension": "pink-present.png",
+      "quotes": [
+        "Discover the heartwarming secrets hidden inside the pretty pink box.",
+        "Let the pink box enchant you with its sweetness and warmth.",
+        "Unveil the tenderness and affection concealed within the pink box.",
+        "Feel the love and care radiating from the adorable pink box."
+      ]
     },
     {
       "technicalName": "purple-present",
       "type": "present",
       "name": "Purple Present",
       "color": "0x6f3a82",
-      "emoji": ".",
-      "fileNameAndExtension": "purple-present.png"
+      "emoji": "<:purplepresent:1169741373298180167>",
+      "fileNameAndExtension": "purple-present.png",
+      "quotes": [
+        "Unlock the mysteries hidden within the elegant purple box.",
+        "Let the royal charm of the purple box captivate your senses.",
+        "Unveil the enchanting secrets concealed within the deep purple box.",
+        "Discover the regal allure nestled within the luxurious purple box."
+      ]
     },
     {
       "technicalName": "red-present",
       "type": "present",
       "name": "Red Present",
       "color": "0xfd5d5a",
-      "emoji": ".",
-      "fileNameAndExtension": "red-present.png"
+      "emoji": "<:redpresent:1169741375416303716>",
+      "fileNameAndExtension": "red-present.png",
+      "quotes": [
+        "Unwrap the fiery passion and joy awaiting within the vibrant red box.",
+        "Feel the excitement radiating from the beautiful red box of surprises.",
+        "Let the red box ignite your spirit with its vibrant energy.",
+        "Discover the intensity and love wrapped within the bold red box."
+      ]
     },
     {
       "technicalName": "candy",
@@ -77,7 +131,10 @@
       "name": "Candy",
       "color": "0xff6377",
       "emoji": "<:candy:1165849590415753287>",
-      "fileNameAndExtension": "candy.png"
+      "fileNameAndExtension": "candy.png",
+      "quotes": [
+        "With this candy, you may start your winter journey!"
+      ]
     }
   ]
   

@@ -9,6 +9,7 @@ import { Redis } from "../../../utils/Redis";
 import { MessageUtil } from "../../../utils/MessageUtil";
 import { goodify } from "../../../utils/goodify";
 import { GoodieController } from "../../../controllers/GoodieController";
+import { getGoodie } from "../../../utils/Goodie";
 
 export default class ClaimCommand extends Command {
   constructor(ctx: Context) {
@@ -48,7 +49,8 @@ export default class ClaimCommand extends Command {
         getRedisValue.length
       );
       if (input === getRedisClaimID) {
-        if (getRedisGoodie === "present") {
+        if (getRedisGoodie.includes("present")) {
+          console.log("yes")
           if (await GoodieController.findUser(interaction.user.id)) {
             await GoodieController.incrementPresent(interaction.user.id);
           } else {
@@ -66,22 +68,22 @@ export default class ClaimCommand extends Command {
         (await interaction.editReply({
           content: MessageUtil.Success(
             `**Congratulations, you have claimed a ${
-              getRedisGoodie === "present" ? "present" : "candy"
+              getGoodie(getRedisGoodie).name
             }! View your inventory using \`/inventory\`!**`
           ),
           embeds: [
             {
               title: "Claimed!",
-              color: getRedisGoodie === "present" ? 0x515a91 : 0xff6377,
+              color: getGoodie(getRedisGoodie).color,
               description: `**<a:bell:1169443376714760192> The latest ${
-                getRedisGoodie === "present" ? "present" : "candy"
+                getGoodie(getRedisGoodie).name
               } has been claimed! <a:bell:1169443376714760192>**`,
               thumbnail: {
-                url:
-                  getRedisGoodie === "present"
-                    ? "https://raw.githubusercontent.com/JayyDoesDev/christy/main/.github/assets/present.png"
-                    : "https://raw.githubusercontent.com/JayyDoesDev/christy/main/.github/assets/candy.png",
+                url: getGoodie(getRedisGoodie).emojiIcon
               },
+            footer: {
+              text: getGoodie(getRedisGoodie).quotes[Math.floor(Math.random() * getGoodie(getRedisGoodie).quotes.length)]
+            }
             },
           ],
         })) as any;

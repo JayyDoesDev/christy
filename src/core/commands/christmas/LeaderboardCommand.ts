@@ -6,11 +6,10 @@ import {
 } from "@antibot/interactions";
 import { Command } from "../../../structures/Command";
 import { Context } from "../../../structures/Context";
-import { Redis } from "../../../utils/Redis";
 import { MessageUtil } from "../../../utils/MessageUtil";
-import { goodify } from "../../../utils/goodify";
-import { GoodieController } from "../../../controllers/GoodieController";
+import goodies from "../../../../data/goodies.json";
 import UserModel from "../../../controllers/models/UserModel";
+import { randomGoodie } from "../../../utils/Goodie";
 
 export default class LeaderboardCommand extends Command {
   constructor(ctx: Context) {
@@ -58,7 +57,7 @@ export default class LeaderboardCommand extends Command {
                 .reverse()
                 .map(async (x, i) => {
                   const user = await this.ctx.users.fetch(String(x.User));
-                  return `**${this.randomGoodie()} ${i + 1}. ${
+                  return `**${randomGoodie()} ${i + 1}. ${
                     user.username
                   } (${x.presentCount + x.candyCount})**`;
                 })
@@ -67,14 +66,5 @@ export default class LeaderboardCommand extends Command {
         },
       ],
     })) as any;
-  }
-
-  randomGoodie(): string {
-    const goodies: string[] = ["present", "candy"];
-    let string: string = "";
-    goodies[Math.floor(Math.random() * goodies.length)] === "present"
-      ? string = "<:present:1165862478018773013>"
-      : string = "<:candy:1165849590415753287>"; 
-      return string;
   }
 }

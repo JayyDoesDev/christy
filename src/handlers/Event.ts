@@ -8,9 +8,10 @@ import { MessageUtil } from "../utils/MessageUtil";
 import { nanoid } from "nanoid";
 import { Redis } from "../utils/Redis";
 import { goodify } from "../utils/goodify";
+import { getGoodie } from "../utils/Goodie";
 
 export default function (ctx: Context): void {
-  let events: string[] = glob.sync("./dist/core/events/**/**/*.js");
+  let events: string[] = glob.sync("./dist/src/core/events/**/**/*.js");
   for (let i: number = 0; i < events.length; i++) {
     let file: any = require(path.resolve(events[i]));
     if (file.default) {
@@ -33,13 +34,24 @@ export default function (ctx: Context): void {
   const redisKey: string = "christy";
   const redisIdentifier: string = "code";
   setInterval(async () => {
-    const goodies: string[] = ["present", "candy"];
+    const goodies: string[] = [
+      "blue-present",
+      "gray-present",
+      "ikea-present",
+      "light-blue-present",
+      "light-green-present",
+      "light-purple-present",
+      "pink-present",
+      "purple-present",
+      "red-present",
+      "candy"
+    ];
     const goodie = goodies[Math.floor(Math.random() * goodies.length)];
     const redisValue: string = `${nanoid(7)}:${goodie}`;
     const channel: Channel | any = ctx.channels.cache.get(
       process.env.DROPCHANNEL
     );
-    const timers: number[] = [3600000, 7200000, 10800000]; //[3600000, 7200000, 10800000];
+    const timers: number[] = [1800000, 3600000]; //[3600000, 7200000, 10800000];
     if (await Timer.exists(userId, guildId, redisTimerIdentifier)) {
       console.log("Timer does exist");
       if (await Timer.expired(userId, guildId, redisTimerIdentifier)) {
@@ -52,14 +64,10 @@ export default function (ctx: Context): void {
         channel.send({
           embeds: [
             {
-              description: `**${
-                goodie === "present"
-                  ? "<:present:1165862478018773013>"
-                  : "<:candy:1165849590415753287>"
-              } A wild ${
-                goodie === "present" ? "present" : "candy"
+              description: `**${getGoodie(goodie).emoji} A wild ${
+                getGoodie(goodie).name
               } has spawned! Claim it with \`/claim ${getRedisClaimID}\`!**`,
-              color: goodie === "present" ? 0x515a91 : 0xff6377,
+              color: getGoodie(goodie).color,
             },
           ],
         });
@@ -78,20 +86,16 @@ export default function (ctx: Context): void {
       Redis.set(redisKey, redisValue, redisIdentifier);
       const getRedisValue: string = await Redis.get(redisKey, redisIdentifier);
       const getRedisClaimID: string = getRedisValue.slice(0, 7);
-      channel.send({
-        embeds: [
-          {
-            description: `**${
-              goodie === "present"
-                ? "<:present:1165862478018773013>"
-                : "<:candy:1165849590415753287>"
-            } A wild ${
-              goodie === "present" ? "present" : "candy"
-            } has spawned! Claim it with \`/claim ${getRedisClaimID}\`!**`,
-            color: goodie === "present" ? 0x515a91 : 0xff6377,
-          },
-        ],
-      });
+        channel.send({
+          embeds: [
+            {
+              description: `**${getGoodie(goodie).emoji} A wild ${
+                getGoodie(goodie).name
+              } has spawned! Claim it with \`/claim ${getRedisClaimID}\`!**`,
+              color: getGoodie(goodie).color,
+            },
+          ],
+        });
       return await Timer.start(
         userId,
         guildId,

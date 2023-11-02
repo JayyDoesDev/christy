@@ -9,6 +9,7 @@ import { Redis } from "../../../utils/Redis";
 import { MessageUtil } from "../../../utils/MessageUtil";
 import { goodify } from "../../../utils/goodify";
 import { GoodieController } from "../../../controllers/GoodieController";
+import { randomGoodie } from "../../../utils/Goodie";
 
 export default class InventoryCommand extends Command {
   constructor(ctx: Context) {
@@ -33,30 +34,7 @@ export default class InventoryCommand extends Command {
       const data = await GoodieController.getUser(interaction.user.id);
       return (await interaction.editReply({
         content: MessageUtil.Success(
-          "**<:candy:1165849590415753287> Here is your inventory! <:present:1165862478018773013>**"
-        ),
-        embeds: [
-          {
-            title: "Your Inventory",
-            color: 1338170,
-            thumbnail: {
-              url: interaction.user.displayAvatarURL({ forceStatic: true }),
-            },
-            description: `<:candy:1165849590415753287> **Candies Collected:** ${data.candyCount}\n<:present:1165862478018773013> **Presents Collected:** ${data.presentCount}`,
-            footer: {
-              icon_url:
-                "https://banner2.cleanpng.com/20180417/zae/kisspng-emoji-sticker-text-messaging-christmas-sms-christmas-5ad5ecc8ef0007.160354341523969224979.jpg",
-              text: "Created by the NTTS Staff team, Merry Christmas!",
-            },
-          },
-        ],
-      })) as any;
-    } else {
-      await GoodieController.createUser(interaction.user.id);
-      const data = await GoodieController.getUser(interaction.user.id);
-      return (await interaction.editReply({
-        content: MessageUtil.Success(
-          "**<:candy:1165849590415753287> Here is your inventory! <:present:1165862478018773013>**"
+          `**${randomGoodie()} Here is your inventory! ${randomGoodie()}**`
         ),
         embeds: [
           {
@@ -67,10 +45,41 @@ export default class InventoryCommand extends Command {
                 forceStatic: true,
               }),
             },
-            description: `<:candy:1165849590415753287> **Candies Collected:** ${data.candyCount}\n<:present:1165862478018773013> **Presents Collected:** ${data.presentCount}`,
+            description: `${randomGoodie()} **Candies Collected:** ${
+              data.candyCount
+            }\n${randomGoodie()} **Presents Collected:** ${data.presentCount}`,
             footer: {
-              icon_url:
-                "https://banner2.cleanpng.com/20180417/zae/kisspng-emoji-sticker-text-messaging-christmas-sms-christmas-5ad5ecc8ef0007.160354341523969224979.jpg",
+              icon_url: interaction.channel.guild.iconURL({
+                forceStatic: true,
+              }),
+              text: "Created by the NTTS Staff team, Merry Christmas!",
+            },
+          },
+        ],
+      })) as any;
+    } else {
+      await GoodieController.createUser(interaction.user.id);
+      const data = await GoodieController.getUser(interaction.user.id);
+      return (await interaction.editReply({
+        content: MessageUtil.Success(
+          `**${randomGoodie()} Here is your inventory! ${randomGoodie()}**`
+        ),
+        embeds: [
+          {
+            title: "Your Inventory",
+            color: 1338170,
+            thumbnail: {
+              url: interaction.user.displayAvatarURL({
+                forceStatic: true,
+              }),
+            },
+            description: `${randomGoodie()} **Candies Collected:** ${
+              data.candyCount
+            }\n${randomGoodie()} **Presents Collected:** ${data.presentCount}`,
+            footer: {
+              icon_url: interaction.channel.guild.iconURL({
+                forceStatic: true,
+              }),
               text: "Created by the NTTS Staff team, Merry Christmas!",
             },
           },
