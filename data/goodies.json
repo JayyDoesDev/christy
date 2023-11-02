@@ -1,11 +1,83 @@
 [
     {
-        "blue-present": {
-            "type": "present",
-            "name": "Blue Present",
-            "color": "0x515a91",
-            "emoji": "<:present:1165862478018773013>",
-            "fileNameAndExtension": "blue-present.png"
-        }
+      "technicalName": "blue-present",
+      "type": "present",
+      "name": "Blue Present",
+      "color": "0x515a91",
+      "emoji": "<:present:1165862478018773013>",
+      "fileNameAndExtension": "blue-present.png"
+    },
+    {
+      "technicalName": "gray-present",
+      "type": "present",
+      "name": "Gray Present",
+      "color": "0xa5a7a8",
+      "emoji": ".",
+      "fileNameAndExtension": "gray-present.png"
+    },
+    {
+      "technicalName": "ikea-present",
+      "type": "present",
+      "name": "Ikea Present",
+      "color": "0x70bbdf",
+      "emoji": ".",
+      "fileNameAndExtension": "ikea-present.png"
+    },
+    {
+      "technicalName": "light-blue-present",
+      "type": "present",
+      "name": "Light Blue Present",
+      "color": "0xa2c7d1",
+      "emoji": ".",
+      "fileNameAndExtension": "light-blue-present.png"
+    },
+    {
+      "technicalName": "light-green-present",
+      "type": "present",
+      "name": "Light Green Present",
+      "color": "0xd2cfac",
+      "emoji": ".",
+      "fileNameAndExtension": "light-green-present.png"
+    },
+    {
+      "technicalName": "light-purple-present",
+      "type": "present",
+      "name": "Light Purple Present",
+      "color": "0x766396",
+      "emoji": ".",
+      "fileNameAndExtension": "light-purple-present.png"
+    },
+    {
+      "technicalName": "pink-present",
+      "type": "present",
+      "name": "Pink Present",
+      "color": "0xeb94e8",
+      "emoji": ".",
+      "fileNameAndExtension": "pink-present.png"
+    },
+    {
+      "technicalName": "purple-present",
+      "type": "present",
+      "name": "Purple Present",
+      "color": "0x6f3a82",
+      "emoji": ".",
+      "fileNameAndExtension": "purple-present.png"
+    },
+    {
+      "technicalName": "red-present",
+      "type": "present",
+      "name": "Red Present",
+      "color": "0xfd5d5a",
+      "emoji": ".",
+      "fileNameAndExtension": "red-present.png"
+    },
+    {
+      "technicalName": "candy",
+      "type": "candy",
+      "name": "Candy",
+      "color": "0xff6377",
+      "emoji": "<:candy:1165849590415753287>",
+      "fileNameAndExtension": "candy.png"
     }
-]
+  ]
+  
