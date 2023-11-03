@@ -13,9 +13,9 @@
 <h3 align="left">No Text To Speech (Host & Tester)</h3>
 <h3 align="left">JayyDoesDev (Head Developer)</h3>
 <h3 align="left">Tazhys (Consultant)</h3>
-<h3 align="left">Jenku (Designer, Conceptualizer, and Event Organizer)</h3>
-<h3 align="left">Lavernie (Designer, Conceptualizer, and Event Organizer)</h3>
-<h3 align="left">Ccet (Conceptualizer, Events Organizer)</h3>
+<h3 align="left">Jenku (Designer, Conceptualizer, & Event Organizer)</h3>
+<h3 align="left">Lavernie (Designer, Conceptualizer, & Event Organizer)</h3>
+<h3 align="left">Ccet (Conceptualizer, Events Organizer, & Tester)</h3>
 <h3 align="left">ImEagle (Data Contributor & Event Organizer)</h3>
 <h3 align="left">Alexpalexsmalex (Tester)</h3>
 <h3 align="left">vorlie (Tester)</h3>
