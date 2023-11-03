@@ -9,6 +9,7 @@ import {
   PlantPermission,
 } from "@antibot/interactions";
 import { MessageUtil } from "../../../utils/MessageUtil";
+import { ZillaCollection } from "@antibot/zilla";
 export default class InteractionEvent extends Event {
   constructor(ctx: Context) {
     super(ctx, {
@@ -27,6 +28,27 @@ export default class InteractionEvent extends Event {
 
     const command: Command = this.ctx.interactions.get(interaction.commandName);
     if (command) {
+      if (!this.ctx.cooldown.has(command.name)) {
+        this.ctx.cooldown.set(command.name, new ZillaCollection<any, any>());
+      }
+      const now: number = Date.now();
+      const timestamps: any = this.ctx.cooldown.get(command.name);
+      const cooldown: number = Number(process.env.COMMANDCOOLDOWN);
+      if (timestamps.has(interaction.user.id)) {
+        const ex: number = timestamps.get(interaction.user.id) + cooldown;
+        if (now < ex) {
+          await interaction.deferReply({ ephemeral: true });
+          return interaction.editReply({
+            content: MessageUtil.Error(
+              "**Please wait until your command cooldown is done!**"
+            ),
+          }) as any;
+        }
+      }
+
+      timestamps.set(interaction.user.id, now);
+      setTimeout(() => timestamps.delete(interaction.user.id), cooldown);
+
       if (command.permissions) {
         const perms: any[] = [];
         let permDisplay: string = "";

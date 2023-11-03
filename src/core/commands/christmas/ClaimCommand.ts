@@ -1,4 +1,10 @@
-import { ChatInputCommandInteraction, Interaction } from "discord.js";
+import {
+  APIEmbed,
+  ChatInputCommandInteraction,
+  Interaction,
+  InteractionEditReplyOptions,
+  MessagePayload,
+} from "discord.js";
 import {
   ApplicationCommandType,
   ApplicationCommandOptionType,
@@ -40,54 +46,81 @@ export default class ClaimCommand extends Command {
     await interaction.deferReply();
     const redisKey: string = "christy";
     const redisIdentifier: string = "code";
-    if (await Redis.exists(redisKey, redisIdentifier)) {
-      const input: string = interaction.options.getString("id");
-      const getRedisValue: string = await Redis.get(redisKey, redisIdentifier);
-      const getRedisClaimID: string = getRedisValue.slice(0, 7);
-      const getRedisGoodie: string = getRedisValue.slice(
-        8,
-        getRedisValue.length
-      );
-      if (input === getRedisClaimID) {
-        if (getRedisGoodie.includes("present")) {
-          console.log("yes")
-          if (await GoodieController.findUser(interaction.user.id)) {
-            await GoodieController.incrementPresent(interaction.user.id);
-          } else {
-            await GoodieController.createUser(interaction.user.id);
-            await GoodieController.incrementPresent(interaction.user.id);
+    if (await Redis.lock(redisKey, redisIdentifier)) {
+      if (await Redis.exists(redisKey, redisIdentifier)) {
+        const input: string = interaction.options.getString("id");
+        const getRedisValue: string = await Redis.get(
+          redisKey,
+          redisIdentifier
+        );
+        const getRedisClaimID: string = getRedisValue.slice(0, 7);
+        const getRedisGoodie: string = getRedisValue.slice(
+          8,
+          getRedisValue.length
+        );
+        if (input === getRedisClaimID) {
+          const embed: InteractionEditReplyOptions = {
+            content: MessageUtil.Success(
+              `**Congratulations, you have claimed a ${
+                getGoodie(getRedisGoodie).name
+              }! View your inventory using \`/inventory\`!**`
+            ),
+            embeds: [
+              {
+                title: "Claimed!",
+                color: getGoodie(getRedisGoodie).color,
+                description: `**<a:bell:1169443376714760192> The latest ${
+                  getGoodie(getRedisGoodie).name
+                } has been claimed! <a:bell:1169443376714760192>**`,
+                thumbnail: {
+                  url: getGoodie(getRedisGoodie).emojiIcon,
+                },
+                footer: {
+                  text: getGoodie(getRedisGoodie).quotes[
+                    Math.floor(
+                      Math.random() * getGoodie(getRedisGoodie).quotes.length
+                    )
+                  ],
+                },
+              },
+            ],
+          };
+          try {
+            if (getRedisGoodie.includes("present")) {
+              console.log("yes");
+              if (await GoodieController.findUser(interaction.user.id)) {
+                await GoodieController.incrementPresent(interaction.user.id);
+                await interaction.editReply(embed);
+                return await Redis.deleteKey(redisKey, redisIdentifier);
+              } else {
+                await GoodieController.createUser(interaction.user.id);
+                await GoodieController.incrementPresent(interaction.user.id);
+                await interaction.editReply(embed);
+                return await Redis.deleteKey(redisKey, redisIdentifier);
+              }
+            } else {
+              if (await GoodieController.findUser(interaction.user.id)) {
+                await GoodieController.incrementCandy(interaction.user.id);
+                await interaction.editReply(embed);
+                return await Redis.deleteKey(redisKey, redisIdentifier);
+              } else {
+                await GoodieController.createUser(interaction.user.id);
+                await GoodieController.incrementCandy(interaction.user.id);
+                await interaction.editReply(embed);
+                return await Redis.deleteKey(redisKey, redisIdentifier);
+              }
+            }
+          } finally {
+            await Redis.unlock(redisKey, redisIdentifier);
+            await Redis.deleteKey(redisKey, redisIdentifier);
           }
         } else {
-          if (await GoodieController.findUser(interaction.user.id)) {
-            await GoodieController.incrementCandy(interaction.user.id);
-          } else {
-            await GoodieController.createUser(interaction.user.id);
-            await GoodieController.incrementCandy(interaction.user.id);
-          }
+          return (await interaction.editReply({
+            content: MessageUtil.Error(
+              "**Sorry, this code doesn't seem to exist! This code as either been claimed or a new code needs to be generated again!**"
+            ),
+          })) as any;
         }
-        (await interaction.editReply({
-          content: MessageUtil.Success(
-            `**Congratulations, you have claimed a ${
-              getGoodie(getRedisGoodie).name
-            }! View your inventory using \`/inventory\`!**`
-          ),
-          embeds: [
-            {
-              title: "Claimed!",
-              color: getGoodie(getRedisGoodie).color,
-              description: `**<a:bell:1169443376714760192> The latest ${
-                getGoodie(getRedisGoodie).name
-              } has been claimed! <a:bell:1169443376714760192>**`,
-              thumbnail: {
-                url: getGoodie(getRedisGoodie).emojiIcon
-              },
-            footer: {
-              text: getGoodie(getRedisGoodie).quotes[Math.floor(Math.random() * getGoodie(getRedisGoodie).quotes.length)]
-            }
-            },
-          ],
-        })) as any;
-        return await Redis.deleteKey(redisKey, redisIdentifier);
       } else {
         return (await interaction.editReply({
           content: MessageUtil.Error(
@@ -98,7 +131,7 @@ export default class ClaimCommand extends Command {
     } else {
       return (await interaction.editReply({
         content: MessageUtil.Error(
-          "**Sorry, this code doesn't seem to exist! This code as either been claimed or a new code needs to be generated again!**"
+          "**Sorry, this code is currently being claimed by someone else. Please wait for another code to be generated!**"
         ),
       })) as any;
     }

@@ -43,4 +43,19 @@ export namespace Redis {
     const formattedKey: string = `${key}:${identifier}`;
     await redis.del(formattedKey);
   }
+
+  export async function lock(
+    key: string,
+    identifier: string
+  ): Promise<boolean> {
+    const formattedKey: string = `lock:${key}:${identifier}`;
+    const lockValue: number = Date.now();
+    const setLock = await redis.set(formattedKey, lockValue, "EX", 10000, "NX");
+    return setLock === "OK";
+  }
+
+  export async function unlock(key: string, identifier: string): Promise<void> {
+    const formattedKey: string = `lock:${key}:${identifier}`;
+    await redis.del(formattedKey);
+  }
 }

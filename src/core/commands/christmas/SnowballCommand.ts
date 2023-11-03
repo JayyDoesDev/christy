@@ -51,13 +51,14 @@ export default class SnowballCommand extends Command {
       const user = await GoodieController.getUser(interaction.user.id);
       if (user) {
         if (user.snowballCount === 0) {
+          await interaction.deferReply();
           return interaction.editReply({
             content: MessageUtil.Success(
               "**You have never snowballed anyone before!**"
             ),
           }) as any;
         }
-        interaction.editReply({
+        return interaction.editReply({
           content: MessageUtil.Success(
             `${
               user.snowballCount === 1
@@ -65,18 +66,20 @@ export default class SnowballCommand extends Command {
                 : `**You have snowballed others ${user.snowballCount} times!**`
             }`
           ),
-        });
+        }) as any;
       } else {
         await GoodieController.createUser(interaction.user.id);
         const user = await GoodieController.getUser(interaction.user.id);
         if (user.snowballCount === 0) {
+          await interaction.deferReply();
           return interaction.editReply({
             content: MessageUtil.Success(
               "**You have never snowballed anyone before!**"
             ),
           }) as any;
         }
-        interaction.editReply({
+        await interaction.deferReply();
+       return interaction.editReply({
           content: MessageUtil.Success(
             `${
               user.snowballCount === 1
@@ -84,7 +87,7 @@ export default class SnowballCommand extends Command {
                 : `**You have snowballed others ${user.snowballCount} times!**`
             }`
           ),
-        });
+        }) as any;
       }
     } else {
       await interaction.deferReply();

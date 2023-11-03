@@ -5,7 +5,7 @@ import { Interactions } from "@antibot/interactions";
 
 export class Context extends Client {
   public commands: ZillaCollection<string, Command>;
-  public cooldown: ZillaCollection<string, Command>;
+  public cooldown: ZillaCollection<string, Command | any>;
   public interactions: ZillaCollection<string, Command>;
   public interact: Interactions;
   constructor() {
@@ -22,6 +22,7 @@ export class Context extends Client {
       },
     });
     this.commands = new ZillaCollection<string, Command>();
+    this.cooldown = new ZillaCollection<string, any>();
     this.interactions = new ZillaCollection<string, Command>();
     this.interact = new Interactions({
       publicKey: process.env.PUBLICKEY,

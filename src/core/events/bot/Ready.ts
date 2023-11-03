@@ -12,7 +12,7 @@ export default class ReadyEvent extends Event {
   async onEvent(...event: any): Promise<void> {
     console.log(`Now logged into ${this.ctx.user.username}`);
     this.ctx.user.setActivity({
-      name: "Christmas movies ",
+      name: "simps give me money",
       type: ActivityType.Watching,
     });
   }
