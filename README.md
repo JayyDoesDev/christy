@@ -17,4 +17,7 @@
 <h3 align="left">Lavernie (Designer & Conceptualizer)</h3>
 <h3 align="left">Ccet (Conceptualizer, Events Organizer)</h3>
 <h3 align="left">ImEagle (Data Contributor & Event Organizer)</h3>
+<h3 align="left">Alexpalexsmalex (Tester)</h3>
+<h3 align="left">vorlie (Tester)</h3>
+<h3 align="left">notjolek (Tester)</h3>
 <h4 align="center">&copy JayyDoesDev</h4>
