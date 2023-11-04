@@ -24,7 +24,7 @@ export type Presents =
   | "purple-present"
   | "red-present";
 export type Candies = "candy";
-export function getGoodie(goodie: Presents | Candies | string): Goodie {
+export function getGoodie(goodie: string): Goodie {
   for (let i: number = 0; i < goodies.length; i++) {
     if (goodies[i].technicalName == goodie) {
       if (goodies[i].type === "present") {
@@ -39,7 +39,7 @@ export function getGoodie(goodie: Presents | Candies | string): Goodie {
           fileNameAndExtension: goodies[i].fileNameAndExtension,
           quotes: goodies[i].quotes,
         };
-      } else {
+      } else if (goodies[i].type === "candy") {
         return {
           type: goodies[i].type as any,
           name: goodies[i].name,
@@ -55,6 +55,14 @@ export function getGoodie(goodie: Presents | Candies | string): Goodie {
     }
   }
 }
-export function randomGoodie(): string {
-  return goodies[Math.floor(Math.random() * goodies.length)].emoji;
+export function randomGoodie(type?: "present" | "candy"): string {
+  if (!type) {
+    return goodies[Math.floor(Math.random() * goodies.length)].emoji;
+  }
+  const filteredGoodies = goodies.filter((goodie) => goodie.type === type);
+  if (filteredGoodies.length === 0) {
+    return "";
+  }
+  const randomIndex = Math.floor(Math.random() * filteredGoodies.length);
+  return filteredGoodies[randomIndex].emoji;
 }

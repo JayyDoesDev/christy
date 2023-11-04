@@ -9,6 +9,7 @@ import { nanoid } from "nanoid";
 import { Redis } from "../utils/Redis";
 import { goodify } from "../utils/goodify";
 import { getGoodie } from "../utils/Goodie";
+import goodiesData from "../../data/goodies.json";
 
 export default function (ctx: Context): void {
   let events: string[] = glob.sync("./dist/src/core/events/**/**/*.js");
@@ -34,18 +35,10 @@ export default function (ctx: Context): void {
   const redisKey: string = "christy";
   const redisIdentifier: string = "code";
   setInterval(async () => {
-    const goodies: string[] = [
-      "blue-present",
-      "gray-present",
-      "ikea-present",
-      "light-blue-present",
-      "light-green-present",
-      "light-purple-present",
-      "pink-present",
-      "purple-present",
-      "red-present",
-      "candy"
-    ];
+    let goodies: string[] = [];
+    goodiesData.forEach((e) => {
+      goodies.push(e.technicalName);
+    });
     const goodie = goodies[Math.floor(Math.random() * goodies.length)];
     const redisValue: string = `${nanoid(7)}:${goodie}`;
     const channel: Channel | any = ctx.channels.cache.get(
@@ -86,16 +79,16 @@ export default function (ctx: Context): void {
       Redis.set(redisKey, redisValue, redisIdentifier);
       const getRedisValue: string = await Redis.get(redisKey, redisIdentifier);
       const getRedisClaimID: string = getRedisValue.slice(0, 7);
-        channel.send({
-          embeds: [
-            {
-              description: `**${getGoodie(goodie).emoji} A wild ${
-                getGoodie(goodie).name
-              } has spawned! Claim it with \`/claim ${getRedisClaimID}\`!**`,
-              color: getGoodie(goodie).color,
-            },
-          ],
-        });
+      channel.send({
+        embeds: [
+          {
+            description: `**${getGoodie(goodie).emoji} A wild ${
+              getGoodie(goodie).name
+            } has spawned! Claim it with \`/claim ${getRedisClaimID}\`!**`,
+            color: getGoodie(goodie).color,
+          },
+        ],
+      });
       return await Timer.start(
         userId,
         guildId,

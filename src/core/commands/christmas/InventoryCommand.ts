@@ -45,9 +45,9 @@ export default class InventoryCommand extends Command {
                 forceStatic: true,
               }),
             },
-            description: `${randomGoodie()} **Candies Collected:** ${
+            description: `${randomGoodie("candy")} **Candies Collected:** ${
               data.candyCount
-            }\n${randomGoodie()} **Presents Collected:** ${data.presentCount}`,
+            }\n${randomGoodie("present")} **Presents Collected:** ${data.presentCount}`,
             footer: {
               icon_url: interaction.channel.guild.iconURL({
                 forceStatic: true,
@@ -62,7 +62,7 @@ export default class InventoryCommand extends Command {
       const data = await GoodieController.getUser(interaction.user.id);
       return (await interaction.editReply({
         content: MessageUtil.Success(
-          `**${randomGoodie()} Here is your inventory! ${randomGoodie()}**`
+          `**${randomGoodie("present")} Here is your inventory! ${randomGoodie("candy")}**`
         ),
         embeds: [
           {
