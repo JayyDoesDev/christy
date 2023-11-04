@@ -41,7 +41,7 @@ export default class LeaderboardCommand extends Command {
     );
     return (await interaction.editReply({
       content: MessageUtil.Success(
-        "**Leaderboard! All presents and candies are added up into goodies!**"
+        MessageUtil.Translate("cmds.leaderboard.leaderboard")
       ),
       embeds: [
         {
@@ -49,25 +49,30 @@ export default class LeaderboardCommand extends Command {
             url: interaction.guild.iconURL({ forceStatic: true }),
           },
           color: 5793266,
-          title: "Server Leaderboard",
-          description: `**The top 10 users with the most goodies!**\n${(
-            await Promise.all(
-              sorttedDocuments
-                .reverse()
-                .slice(0, 10)
-                .map(async (x, i) => {
-                  const user = await this.ctx.users.fetch(String(x.User));
-                  return `**${randomGoodie()} ${i + 1}. ${user.username} (${
-                    x.presentCount + x.candyCount
-                  })**`;
-                })
-            )
-          ).join("\n")}`,
+          title: MessageUtil.Translate("cmds.leaderboard.leaderboardTitle"),
+          description: MessageUtil.Translate(
+            "cmds.leaderboard.leaderboardDescription"
+          ).replace(
+            "{goodies}",
+            (
+              await Promise.all(
+                sorttedDocuments
+                  .reverse()
+                  .slice(0, 10)
+                  .map(async (x, i) => {
+                    const user = await this.ctx.users.fetch(String(x.User));
+                    return `**${randomGoodie()} ${i + 1}. ${user.username} (${
+                      x.presentCount + x.candyCount
+                    })**`;
+                  })
+              )
+            ).join("\n")
+          ),
           footer: {
             icon_url: interaction.channel.guild.iconURL({
               forceStatic: true,
             }),
-            text: "Created by the NTTS Staff team, Merry Christmas!",
+            text: MessageUtil.Translate("footer"),
           },
         },
       ],

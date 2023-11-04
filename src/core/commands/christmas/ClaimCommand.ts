@@ -57,17 +57,19 @@ export default class ClaimCommand extends Command {
       if (input === getRedisClaimID) {
         const embed: InteractionEditReplyOptions = {
           content: MessageUtil.Success(
-            `**Congratulations, you have claimed a ${
+            MessageUtil.Translate("cmds.claim.congrats").replace(
+              "{goodieName}",
               getGoodie(getRedisGoodie).name
-            }! View your inventory using \`/inventory\`!**`
+            )
           ),
           embeds: [
             {
               title: "Claimed!",
               color: getGoodie(getRedisGoodie).color,
-              description: `**<a:bell:1169443376714760192> The latest ${
+              description: MessageUtil.Translate("cmds.claim.claimed").replace(
+                "{goodieName}",
                 getGoodie(getRedisGoodie).name
-              } has been claimed! <a:bell:1169443376714760192>**`,
+              ),
               thumbnail: {
                 url: getGoodie(getRedisGoodie).emojiIcon,
               },
@@ -84,7 +86,6 @@ export default class ClaimCommand extends Command {
         if (await Redis.lock(redisKey, redisIdentifier)) {
           try {
             if (getRedisGoodie.includes("present")) {
-              console.log("yes");
               if (await GoodieController.findUser(interaction.user.id)) {
                 await GoodieController.incrementPresent(interaction.user.id);
                 await interaction.editReply(embed);
@@ -114,24 +115,20 @@ export default class ClaimCommand extends Command {
         } else {
           return (await interaction.editReply({
             content: MessageUtil.Error(
-              "**Sorry, this code doesn't seem to exist! This code as either been claimed or a new code needs to be generated again!**"
+              MessageUtil.Translate("cmds.claim.error")
             ),
           })) as any;
         }
       } else {
         return (await interaction.editReply({
-          content: MessageUtil.Error(
-            "**Sorry, this code doesn't seem to exist! This code as either been claimed or a new code needs to be generated again!**"
-          ),
+          content: MessageUtil.Error(MessageUtil.Translate("cmds.claim.error")),
         })) as any;
       }
     } else {
       await Redis.deleteKey(redisKey, redisIdentifier);
-        return (await interaction.editReply({
-          content: MessageUtil.Error(
-            "**Sorry, this code doesn't seem to exist! This code as either been claimed or a new code needs to be generated again!**"
-          ),
-        })) as any;
+      return (await interaction.editReply({
+        content: MessageUtil.Error(MessageUtil.Translate("cmds.claim.error")),
+      })) as any;
     }
   }
 }

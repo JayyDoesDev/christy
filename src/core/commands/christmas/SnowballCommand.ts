@@ -54,7 +54,7 @@ export default class SnowballCommand extends Command {
           await interaction.deferReply();
           return interaction.editReply({
             content: MessageUtil.Success(
-              "**You have never snowballed anyone before!**"
+              MessageUtil.Translate("cmds.snowball.snowballNever")
             ),
           }) as any;
         }
@@ -62,8 +62,11 @@ export default class SnowballCommand extends Command {
           content: MessageUtil.Success(
             `${
               user.snowballCount === 1
-                ? "**You have snowballed someone one time!**"
-                : `**You have snowballed others ${user.snowballCount} times!**`
+                ? MessageUtil.Translate("cmds.snowball.snowballOnce")
+                : MessageUtil.Translate("cmd.snowball.snowballCount").replace(
+                    "{snowballCount}",
+                    String(user.snowballCount)
+                  )
             }`
           ),
         }) as any;
@@ -74,7 +77,7 @@ export default class SnowballCommand extends Command {
           await interaction.deferReply();
           return interaction.editReply({
             content: MessageUtil.Success(
-              "**You have never snowballed anyone before!**"
+              MessageUtil.Translate("cmds.snowball.snowballNever")
             ),
           }) as any;
         }
@@ -83,8 +86,11 @@ export default class SnowballCommand extends Command {
           content: MessageUtil.Success(
             `${
               user.snowballCount === 1
-                ? "**You have snowballed someone one time!**"
-                : `**You have snowballed others ${user.snowballCount} times!**`
+                ? MessageUtil.Translate("cmds.snowball.snowballOnce")
+                : MessageUtil.Translate("cmds.snowball.snowballCount").replace(
+                    "{snowballCount}",
+                    String(user.snowballCount)
+                  )
             }`
           ),
         }) as any;
@@ -94,11 +100,15 @@ export default class SnowballCommand extends Command {
       const user: User = interaction.options.getUser("user");
       if (user.id === interaction.user.id) {
         interaction.editReply({
-          content: MessageUtil.Success("**You can't snowball your self! 😭**"),
+          content: MessageUtil.Success(
+            MessageUtil.Translate("cmds.snowball.snowballSelf")
+          ),
         });
       } else if (user.id === this.ctx.user.id) {
         interaction.editReply({
-          content: MessageUtil.Success("**Don't snowball me! 😭**"),
+          content: MessageUtil.Success(
+            MessageUtil.Translate("cmds.snowball.snowballMe")
+          ),
         });
       } else {
         if (await GoodieController.findUser(interaction.user.id)) {
@@ -109,7 +119,9 @@ export default class SnowballCommand extends Command {
         }
         interaction.editReply({
           content: MessageUtil.Success(
-            `**<:snowball:1169101537973387306> ${interaction.user.username}** has snowballed **${user.username}**!`
+            MessageUtil.Translate("cmds.snowball.snowball")
+              .replace("{authorName}", interaction.user.username)
+              .replace("{mentionedUsername}", user.username)
           ),
         });
       }

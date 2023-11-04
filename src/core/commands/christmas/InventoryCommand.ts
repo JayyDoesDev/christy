@@ -34,25 +34,31 @@ export default class InventoryCommand extends Command {
       const data = await GoodieController.getUser(interaction.user.id);
       return (await interaction.editReply({
         content: MessageUtil.Success(
-          `**${randomGoodie()} Here is your inventory! ${randomGoodie()}**`
+          MessageUtil.Translate("cmds.inventory.inventory")
+            .replace("{randomPresent}", randomGoodie("present"))
+            .replace("{randomCandy}", randomGoodie("candy"))
         ),
         embeds: [
           {
-            title: "Your Inventory",
+            title: MessageUtil.Translate("cmds.inventory.inventoryTitle"),
             color: 1338170,
             thumbnail: {
               url: interaction.user.displayAvatarURL({
                 forceStatic: true,
               }),
             },
-            description: `${randomGoodie("candy")} **Candies Collected:** ${
-              data.candyCount
-            }\n${randomGoodie("present")} **Presents Collected:** ${data.presentCount}`,
+            description: MessageUtil.Translate(
+              "cmds.inventory.inventoryDescription"
+            )
+              .replace("{randomCandy}", randomGoodie("candy"))
+              .replace("{randomPresent}", randomGoodie("present"))
+              .replace("{candyCount}", String(data.candyCount))
+              .replace("{presentCount}", String(data.presentCount)),
             footer: {
               icon_url: interaction.channel.guild.iconURL({
                 forceStatic: true,
               }),
-              text: "Created by the NTTS Staff team, Merry Christmas!",
+              text: MessageUtil.Translate("footer"),
             },
           },
         ],
@@ -62,25 +68,31 @@ export default class InventoryCommand extends Command {
       const data = await GoodieController.getUser(interaction.user.id);
       return (await interaction.editReply({
         content: MessageUtil.Success(
-          `**${randomGoodie("present")} Here is your inventory! ${randomGoodie("candy")}**`
+          MessageUtil.Translate("cmds.inventory.inventory")
+            .replace("{randomPresent}", randomGoodie("present"))
+            .replace("{randomCandy}", randomGoodie("candy"))
         ),
         embeds: [
           {
-            title: "Your Inventory",
+            title: MessageUtil.Translate("cmds.inventory.inventoryTitle"),
             color: 1338170,
             thumbnail: {
               url: interaction.user.displayAvatarURL({
                 forceStatic: true,
               }),
             },
-            description: `${randomGoodie()} **Candies Collected:** ${
-              data.candyCount
-            }\n${randomGoodie()} **Presents Collected:** ${data.presentCount}`,
+            description: MessageUtil.Translate(
+              "cmds.inventory.inventoryDescription"
+            )
+              .replace("{randomCandy}", randomGoodie("candy"))
+              .replace("{randomPresent}", randomGoodie("present"))
+              .replace("{candyCount}", String(data.candyCount))
+              .replace("{presentCount}", String(data.presentCount)),
             footer: {
               icon_url: interaction.channel.guild.iconURL({
                 forceStatic: true,
               }),
-              text: "Created by the NTTS Staff team, Merry Christmas!",
+              text: MessageUtil.Translate("footer"),
             },
           },
         ],

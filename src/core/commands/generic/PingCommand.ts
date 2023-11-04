@@ -5,6 +5,7 @@ import {
 } from "@antibot/interactions";
 import { Command } from "../../../structures/Command";
 import { Context } from "../../../structures/Context";
+import { MessageUtil } from "../../../utils/MessageUtil";
 
 export default class PingCommand extends Command {
   constructor(ctx: Context) {
@@ -25,6 +26,6 @@ export default class PingCommand extends Command {
       return;
     }
 
-    interaction.reply({ content: "Pong 🏓" });
+    interaction.reply({ content: MessageUtil.Translate("cmds.ping.ping") });
   }
 }
