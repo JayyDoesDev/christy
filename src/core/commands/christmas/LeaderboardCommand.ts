@@ -63,6 +63,12 @@ export default class LeaderboardCommand extends Command {
                 })
             )
           ).join("\n")}`,
+          footer: {
+            icon_url: interaction.channel.guild.iconURL({
+              forceStatic: true,
+            }),
+            text: "Created by the NTTS Staff team, Merry Christmas!",
+          },
         },
       ],
     })) as any;
