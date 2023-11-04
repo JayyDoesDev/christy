@@ -1,6 +1,7 @@
 import { Event } from "../../../structures/Event";
 import { Context } from "../../../structures/Context";
 import { ActivityType } from "discord.js";
+import { MessageUtil } from "../../../utils/MessageUtil";
 
 export default class ReadyEvent extends Event {
   constructor(ctx: Context) {
@@ -12,7 +13,7 @@ export default class ReadyEvent extends Event {
   async onEvent(...event: any): Promise<void> {
     console.log(`Now logged into ${this.ctx.user.username}`);
     this.ctx.user.setActivity({
-      name: "simps give me money",
+      name: MessageUtil.Translate("botStatus"),
       type: ActivityType.Watching,
     });
   }

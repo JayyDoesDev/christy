@@ -1,7 +1,8 @@
 {
+  "botStatus": "simps give me money",
   "cmds": {
     "ping": {
-        "ping": "Pong 🏓"
+      "ping": "Pong 🏓"
     },
     "claim": {
       "error": "**Sorry, this code doesn't seem to exist! This code as either been claimed or a new code needs to be generated again!**",
@@ -19,12 +20,12 @@
       "leaderboardDescription": "**The top 10 users with the most goodies!**\n{goodies}"
     },
     "snowball": {
-        "snowballNever": "**You have never snowballed anyone before!**",
-        "snowballOnce": "**You have snowballed someone one time!**",
-        "snowballCount": "**You have snowballed others {snowballCount} times!**",
-        "snowballSelf": "**You can't snowball your self! 😭**",
-        "snowballMe": "**Don't snowball me! 😭**",
-        "snowball": "**<:snowball:1169101537973387306> {authorName}** has snowballed **{mentionedUsername}**!"
+      "snowballNever": "**You have never snowballed anyone before!**",
+      "snowballOnce": "**You have snowballed someone one time!**",
+      "snowballCount": "**You have snowballed others {snowballCount} times!**",
+      "snowballSelf": "**You can't snowball your self! 😭**",
+      "snowballMe": "**Don't snowball me! 😭**",
+      "snowball": "**<:snowball:1169101537973387306> {authorName}** has snowballed **{mentionedUsername}**!"
     }
   },
   "footer": "Created by the NTTS Staff team, Merry Christmas!"
