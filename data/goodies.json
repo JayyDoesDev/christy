@@ -126,6 +126,50 @@
       ]
     },
     {
+      "technicalName": "candy-cane-present",
+      "type": "present",
+      "name": "Candy Cane Present",
+      "color": "0xF2BBBF",
+      "emoji": ".",
+      "fileNameAndExtension": "candy-cane-present.png",
+      "quotes": [
+        "Sweet delights wrapped in a candy cane embrace, spreading joy in every taste."
+      ]
+    },
+    {
+      "technicalName": "christmas-baubles-present",
+      "type": "present",
+      "name": "Christmas Baubles Present",
+      "color": "0xF2C572",
+      "emoji": ".",
+      "fileNameAndExtension": "christmas-baubles-present.png",
+      "quotes": [
+        "Unwrap the magic of the season with a gift adorned in golden baubles, a treasure to behold."
+      ]
+    },
+    {
+      "technicalName": "star-present",
+      "type": "present",
+      "name": "Star Present",
+      "color": "0xF2D690",
+      "emoji": ".",
+      "fileNameAndExtension": "star-present.png",
+      "quotes": [
+        "A gift that shines like a guiding star, illuminating the path to happiness and wonder."
+      ]
+    },
+    {
+      "technicalName": "gradient-present",
+      "type": "present",
+      "name": "Gradient Present",
+      "color": "0xA63788",
+      "emoji": ".",
+      "fileNameAndExtension": "gradient-present.png",
+      "quotes": [
+        "A present as beautiful as a sunset sky, with a ribbon that blends hues in a captivating sigh."
+      ]
+    },
+    {
       "technicalName": "candy",
       "type": "candy",
       "name": "Candy",
