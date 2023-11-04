@@ -15,9 +15,9 @@
 <h3 align="left">Tazhys (Consultant)</h3>
 <h3 align="left">Jenku (Designer, Conceptualizer, & Event Organizer)</h3>
 <h3 align="left">Lavernie (Designer, Conceptualizer, & Event Organizer)</h3>
-<h3 align="left">Ccet (Conceptualizer, Events Organizer, & Tester)</h3>
+<h3 align="left">Ccet (Conceptualizer, Event Organizer, & Tester)</h3>
 <h3 align="left">ImEagle (Data Contributor & Event Organizer)</h3>
 <h3 align="left">Alexpalexsmalex (Tester)</h3>
-<h3 align="left">vorlie (Tester)</h3>
-<h3 align="left">notjolek (Tester)</h3>
+<h3 align="left">Vorlie (Data Contributor & Tester)</h3>
+<h3 align="left">Notjolek (Tester)</h3>
 <h4 align="center">&copy JayyDoesDev</h4>

@@ -46,20 +46,20 @@ export default class LeaderboardCommand extends Command {
       embeds: [
         {
           thumbnail: {
-            url: interaction.guild.iconURL({ forceStatic: true })
+            url: interaction.guild.iconURL({ forceStatic: true }),
           },
           color: 5793266,
           title: "Server Leaderboard",
           description: `**The top 10 users with the most goodies!**\n${(
             await Promise.all(
               sorttedDocuments
-                .slice(0, 10)
                 .reverse()
+                .slice(0, 10)
                 .map(async (x, i) => {
                   const user = await this.ctx.users.fetch(String(x.User));
-                  return `**${randomGoodie()} ${i + 1}. ${
-                    user.username
-                  } (${x.presentCount + x.candyCount})**`;
+                  return `**${randomGoodie()} ${i + 1}. ${user.username} (${
+                    x.presentCount + x.candyCount
+                  })**`;
                 })
             )
           ).join("\n")}`,
