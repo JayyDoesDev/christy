@@ -79,7 +79,7 @@ export default class SnowballCommand extends Command {
           }) as any;
         }
         await interaction.deferReply();
-       return interaction.editReply({
+        return interaction.editReply({
           content: MessageUtil.Success(
             `${
               user.snowballCount === 1
