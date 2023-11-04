@@ -20,7 +20,6 @@ export namespace Redis {
     identifier: string
   ): Promise<string | any> {
     const formattedKey: string = `${key}:${identifier}`;
-    console.log(await redis.get(formattedKey));
     return await redis.get(formattedKey);
   }
 
