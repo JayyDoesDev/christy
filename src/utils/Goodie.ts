@@ -56,10 +56,25 @@ export function getGoodie(goodie: string): Goodie {
   }
 }
 export function randomGoodie(type?: "present" | "candy"): string {
-  if (!type) {
-    return goodies[Math.floor(Math.random() * goodies.length)].emoji;
+  const shuffled: {
+    technicalName: string;
+    type: string;
+    name: string;
+    color: string;
+    emoji: string;
+    fileNameAndExtension: string;
+    quotes: string[];
+  }[] = [...goodies];
+
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j: number = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
-  const filteredGoodies = goodies.filter((goodie) => goodie.type === type);
+
+  if (!type) {
+    return shuffled[0].emoji;
+  }
+  const filteredGoodies = shuffled.filter((goodie) => goodie.type === type);
   if (filteredGoodies.length === 0) {
     return "";
   }
