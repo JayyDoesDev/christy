@@ -40,7 +40,7 @@ export default class InteractionEvent extends Event {
           await interaction.deferReply({ ephemeral: true });
           return interaction.editReply({
             content: MessageUtil.Error(
-              "**Please wait until your command cooldown is done!**"
+              MessageUtil.Translate("cooldown")
             ),
           }) as any;
         }

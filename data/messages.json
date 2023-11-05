@@ -1,5 +1,6 @@
 {
   "botStatus": "simps give me money",
+  "cooldown": "**Please wait until your command cooldown is done!**",
   "cmds": {
     "ping": {
       "ping": "Pong 🏓"

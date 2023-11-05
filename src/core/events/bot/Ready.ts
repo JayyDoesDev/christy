@@ -14,7 +14,8 @@ export default class ReadyEvent extends Event {
     console.log(`Now logged into ${this.ctx.user.username}`);
     this.ctx.user.setActivity({
       name: MessageUtil.Translate("botStatus"),
-      type: ActivityType.Watching,
+      type: ActivityType.Streaming,
+      url: "https://www.twitch.tv/Discord",
     });
   }
 }
