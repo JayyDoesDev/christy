@@ -48,8 +48,9 @@ export default class SnowballCommand extends Command {
     const subCommand: string = interaction.options.getSubcommand();
     if (subCommand === "count") {
       await interaction.deferReply();
-      const user = await GoodieController.getUser(interaction.user.id);
-      if (user) {
+      const userExists = await GoodieController.findUser(interaction.user.id);
+      if (userExists) {
+        const user = await GoodieController.getUser(interaction.user.id);
         if (user.snowballCount === 0) {
           await interaction.deferReply();
           return interaction.editReply({
@@ -63,7 +64,7 @@ export default class SnowballCommand extends Command {
             `${
               user.snowballCount === 1
                 ? MessageUtil.Translate("cmds.snowball.snowballOnce")
-                : MessageUtil.Translate("cmd.snowball.snowballCount").replace(
+                : MessageUtil.Translate("cmds.snowball.snowballCount").replace(
                     "{snowballCount}",
                     String(user.snowballCount)
                   )

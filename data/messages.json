@@ -1,14 +1,14 @@
 {
   "botStatus": "simps give me money",
-  "cooldown": "**Please wait until your command cooldown is done!**",
+  "cooldown": "**You’re going too fast! Please wait for your cooldown to be done~ ^~^**",
   "cmds": {
     "ping": {
       "ping": "Pong 🏓"
     },
     "claim": {
-      "error": "**Sorry, this code doesn't seem to exist! This code as either been claimed or a new code needs to be generated again!**",
+      "error": "**I’m sorry gumdrop! Are you sure you typed that correctly? If so, someone’s beaten you to the punch! please wait for another present to drop~ ^~^**",
       "claimed": "**<a:bell:1169443376714760192> The latest {goodieName} has been claimed! <a:bell:1169443376714760192>**",
-      "congrats": "**Congratulations, you have claimed a {goodieName}! View your inventory using `/inventory`!**"
+      "congrats": "**Congrats sugar drop! you have claimed a {goodieName}! Check out your new goodie by using `/inventory`!**"
     },
     "inventory": {
       "inventoryTitle": "Your inventory",
@@ -21,11 +21,11 @@
       "leaderboardDescription": "**The top 10 users with the most goodies!**\n{goodies}"
     },
     "snowball": {
-      "snowballNever": "**You have never snowballed anyone before!**",
-      "snowballOnce": "**You have snowballed someone one time!**",
-      "snowballCount": "**You have snowballed others {snowballCount} times!**",
-      "snowballSelf": "**You can't snowball your self! 😭**",
-      "snowballMe": "**Don't snowball me! 😭**",
+      "snowballNever": "**You haven’t snowballed anyone yet snickerdoodle!**",
+      "snowballOnce": "**You have only snowballed one person? aren’t you a goodie tooshoes gumdrop!**",
+      "snowballCount": "**You have snowballed others {snowballCount} times! Hey that’s mean gumdrop, do it again!**",
+      "snowballSelf": "**You can't snowball yourself silly! 😭**",
+      "snowballMe": "**HEY! That was mean, that hurt my feelings, please don’t do that again! 😭**",
       "snowball": "**<:snowball:1169101537973387306> {authorName}** has snowballed **{mentionedUsername}**!"
     }
   },
