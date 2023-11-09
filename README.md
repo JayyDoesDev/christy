@@ -20,4 +20,5 @@
 <h3 align="left">Alexpalexsmalex (Tester)</h3>
 <h3 align="left">Vorlie (Data Contributor & Tester)</h3>
 <h3 align="left">Notjolek (Tester)</h3>
+<h3 align="left">Eric Pan (Tester & Bug Hunter)</h3>
 <h4 align="center">&copy JayyDoesDev</h4>
