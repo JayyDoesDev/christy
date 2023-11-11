@@ -1,14 +1,14 @@
 {
   "botStatus": "simps give me money",
-  "cooldown": "**You’re going too fast! Please wait for your cooldown to be done~ ^~^**",
+  "cooldown": "**You’re going too fast~ Wait there a little more for me, will ya? :heart:**",
   "cmds": {
     "ping": {
-      "ping": "Pong 🏓"
+      "ping": "haha, no need to ping me, I will always be here waiting for you~"
     },
     "claim": {
-      "error": "**I’m sorry gumdrop! Are you sure you typed that correctly? If so, someone’s beaten you to the punch! please wait for another present to drop~ ^~^**",
-      "claimed": "**<a:bell:1169443376714760192> The latest {goodieName} has been claimed! <a:bell:1169443376714760192>**",
-      "congrats": "**Congrats sugar drop! you have claimed a {goodieName}! Check out your new goodie by using `/inventory`!**"
+      "error": "**I’m sorry gumdrop~ I don't know if you typed that properly~ Someone might have beaten you to it! please wait for another present from me to drop~ ^~^**",
+      "claimed": "**<a:bell:1169443376714760192> The latest {goodieName} has been claimed! <a:bell:1169443376714760192>\\nWatch our for more, simps :wink:**",
+      "congrats": "**Congrats my sugar drop~ you claimed a {goodieName}~ Check out your new goodie by using `/inventory`~**"
     },
     "inventory": {
       "inventoryTitle": "Your inventory",
@@ -21,11 +21,11 @@
       "leaderboardDescription": "**The top 10 users with the most goodies!**\n{goodies}"
     },
     "snowball": {
-      "snowballNever": "**You haven’t snowballed anyone yet snickerdoodle!**",
-      "snowballOnce": "**You have only snowballed one person? aren’t you a goodie tooshoes gumdrop!**",
+      "snowballNever": "**You haven’t snowballed anyone yet snickerdoodle~**",
+      "snowballOnce": "**You have only snowballed one person? maybe you need a little more motivation~ :wink:**",
       "snowballCount": "**You have snowballed others {snowballCount} times! Hey that’s mean gumdrop, do it again!**",
-      "snowballSelf": "**You can't snowball yourself silly! 😭**",
-      "snowballMe": "**HEY! That was mean, that hurt my feelings, please don’t do that again! 😭**",
+      "snowballSelf": "**Hmmph. And to think I was going to give you a gift.**",
+      "snowballMe": "**HEY! That was mean... that hurt my feelings, please don’t do that again! 😭**",
       "snowball": "**<:snowball:1169101537973387306> {authorName}** has snowballed **{mentionedUsername}**!"
     }
   },
