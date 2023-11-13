@@ -5,7 +5,7 @@
 dist
 .env
 !.github/
-
+.vscode/
 # User-specific files
 *.rsuser
 *.suo
