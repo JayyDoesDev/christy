@@ -3,6 +3,11 @@ import { Command } from "../../../structures/Command";
 import { Context } from "../../../structures/Context";
 import { MessageUtil } from "../../../utils/MessageUtil";
 
+import {
+  ApplicationCommandType,
+  ApplicationCommandOptionType,
+} from "@antibot/interactions";
+
 export default class AboutCommand extends Command {
   constructor(ctx) {
     super(ctx, {
@@ -10,7 +15,7 @@ export default class AboutCommand extends Command {
       description: "About the bot",
       interaction: {
         name: "about",
-        type: 1, // Assuming 1 is CHAT_INPUT, replace with the correct value
+        type: ApplicationCommandType.CHAT_INPUT,
         description: "About the bot!",
         options: [],
       },
