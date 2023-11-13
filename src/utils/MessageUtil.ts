@@ -1,4 +1,5 @@
 import messages from "../../data/messages.json";
+
 export namespace MessageUtil {
   export function Success(content: string): string {
     return `> ${content}`;
@@ -23,8 +24,10 @@ export namespace MessageUtil {
         return "Error with translation: https://github.com/JayyDoesDev/christy/blob/main/data/messages.json";
       }
     }
+
+    // Check if translation is a string and replace \\n with newline
     if (typeof translation === "string") {
-      return translation;
+      return translation.replace(/\\n/g, "\n");
     } else {
       return "Error with translation: https://github.com/JayyDoesDev/christy/blob/main/data/messages.json";
     }
