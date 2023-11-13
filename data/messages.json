@@ -7,7 +7,7 @@
     },
     "claim": {
       "error": "**I’m sorry gumdrop~ I don't know if you typed that properly~ Someone might have beaten you to it! please wait for another present from me to drop~ ^~^**",
-      "claimed": "**<a:bell:1169443376714760192> The latest {goodieName} has been claimed! <a:bell:1169443376714760192>**\\n**Watch our for more, simps :wink:**",
+      "claimed": "**<a:bell:1169443376714760192> The latest {goodieName} has been claimed! <a:bell:1169443376714760192>**\n**Watch our for more, simps :wink:**",
       "congrats": "**Congrats my sugar drop~ you claimed a {goodieName}~ Check out your new goodie by using `/inventory`~**"
     },
     "inventory": {
