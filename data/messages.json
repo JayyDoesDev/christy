@@ -1,32 +1,35 @@
 {
-  "botStatus": "simps give me money",
-  "cooldown": "**You’re going too fast~ Wait there a little more for me, will ya? :heart:**",
+  "botStatus": "how much candy I see!",
+  "cooldown": "**You’re going too fast, sweet thing!~ Wait there a little more for me, will ya? :heart:**",
   "cmds": {
     "ping": {
-      "ping": "haha, no need to ping me, I will always be here waiting for you~"
+      "ping": "Oh you pinged me! Silly, I'll always be right here waiting for you.~"
     },
     "claim": {
-      "error": "**I’m sorry gumdrop~ I don't know if you typed that properly~ Someone might have beaten you to it! please wait for another present from me to drop~ ^~^**",
-      "claimed": "**<a:bell:1169443376714760192> The latest {goodieName} has been claimed! <a:bell:1169443376714760192>**\n**Watch our for more, simps :wink:**",
-      "congrats": "**Congrats my sugar drop~ you claimed a {goodieName}~ Check out your new goodie by using `/inventory`~**"
+      "error": "**Eep! Hey, sugarplum. Looks like the code you gave me isn't working... I think someone else might have beaten you to it! That's okay, wait a little and I'll make sure another one drops soon!~ ;)",
+      "claimed": "**<a:bell:1169443376714760192> Oh my bells! The latest {goodieName} has been claimed! <a:bell:1169443376714760192> Keep an eye out for anymore I might drop!**",
+      "congrats": "**Congrats my sugar drop!~ You claimed a {goodieName}!~ Check out your new goodie by using `/inventory`~**"
     },
     "inventory": {
       "inventoryTitle": "Your inventory",
-      "inventory": "**{randomPresent} Here is your inventory! {randomCandy}**",
+      "inventory": "**{randomPresent} Here is your inventory! You're on the way to success, my dear.~ {randomCandy}**",
       "inventoryDescription": "{randomCandy} **Candies Collected:** {candyCount}\n{randomPresent} **Presents Collected:** {presentCount}"
     },
     "leaderboard": {
       "leaderboardTitle": "Server Leaderboard",
       "leaderboard": "**Leaderboard! All presents and candies are added up into goodies!**",
-      "leaderboardDescription": "**The top 10 users with the most goodies!**\n{goodies}"
+      "leaderboardDescription": "**Ooo! The top 10 users with the most goodies! My special little sweethearts.~**\n{goodies}"
     },
     "snowball": {
-      "snowballNever": "**You haven’t snowballed anyone yet snickerdoodle~**",
-      "snowballOnce": "**You have only snowballed one person? maybe you need a little more motivation~ :wink:**",
-      "snowballCount": "**You have snowballed others {snowballCount} times! Hey that’s mean gumdrop, do it again!**",
-      "snowballSelf": "**Darling, I'm right here. Don't hurt yourself~ :heart:**",
-      "snowballMe": "**Hmmph. And to think I was going to give you a gift~**",
+      "snowballNever": "**Hehe! You haven’t snowballed anyone yet, snickerdoodle.~**",
+      "snowballOnce": "**You have only snowballed one person, oh gosh.... Maybe you need a little more motivation~ :wink:**",
+      "snowballCount": "**You have snowballed others {snowballCount} times! I didn't realize how vicious you are! I hope you're doing it in my honor, gumdrop.~**",
+      "snowballSelf": "**My darling, I'm right here. Don't hurt yourself~ :heart:**",
+      "snowballMe": "**Hmmph! I can't believe it! I was going to give you a gift~**",
       "snowball": "**<:snowball:1169101537973387306> {authorName}** has snowballed **{mentionedUsername}**!"
+    },
+    "about": {
+      "aboutDescription": "Hello there! I'm Marie, your festive companion, spreading holiday cheer with a touch of magic.\n\n🎄✨ I'm here to infuse your holiday season with joy through a collection of delightful commands.\n\nLet the merriment begin! 🌟"
     }
   },
   "footer": "Created by the NTTS Event team, Merry Christmas!"
