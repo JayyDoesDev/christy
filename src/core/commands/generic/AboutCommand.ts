@@ -36,7 +36,7 @@ export default class AboutCommand extends Command {
             text: MessageUtil.Translate("footer"),
           },
           thumbnail: {
-            url: interaction.user.displayAvatarURL(),
+            url: this.ctx.user.displayAvatarURL(),
           },
         },
       ],
