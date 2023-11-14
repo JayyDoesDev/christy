@@ -9,16 +9,19 @@
    <img src="https://github.com/JayyDoesDev/christy/blob/main/.github/assets/Discord_GArwcAEKHt.gif" alt="showcase">
 </p>
 
-<h2 align="left">Credits</h2>
-<h3 align="left">No Text To Speech (Host & Tester)</h3>
+<h1 align="left">Created by the NTTS Event Team</h1>
+<h2 align="left">Event Team Directors</h2>
+<h3 align="left">Jenku (Event Director)</h3>
+<h3 align="left">Lavernie (Event Co Director)</h3>
+<h2 align="left">Event Developers</h2>
 <h3 align="left">JayyDoesDev (Head Developer)</h3>
-<h3 align="left">Tazhys (Consultant)</h3>
-<h3 align="left">Jenku (Designer, Conceptualizer, & Event Organizer)</h3>
-<h3 align="left">Lavernie (Designer, Conceptualizer, & Event Organizer)</h3>
-<h3 align="left">Ccet (Conceptualizer, Event Organizer, & Tester)</h3>
-<h3 align="left">ImEagle (Data Contributor & Event Organizer)</h3>
+<h3 align="left">Eric Pan (Developer)</h3>
+<h2 align="left">Event Conceptualizers</h2>
+<h3 align="left">Ccet (Conceptualizer)</h3>
+<h2 align="left">Event Data Contributors</h2>
+<h3 align="left">ImEagle (Data Contributor)</h3>
+<h3 align="left">Vorlie (Data Contributor)</h3>
 <h3 align="left">Alexpalexsmalex (Tester)</h3>
-<h3 align="left">Vorlie (Data Contributor & Tester)</h3>
 <h3 align="left">Notjolek (Tester)</h3>
 <h3 align="left">Eric Pan (Tester & Bug Hunter)</h3>
-<h4 align="center">&copy JayyDoesDev</h4>
+<h4 align="center">&copy NTTS Event Team</h4>
