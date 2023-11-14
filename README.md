@@ -21,7 +21,10 @@
 <h2 align="left">Event Data Contributors</h2>
 <h3 align="left">ImEagle (Data Contributor)</h3>
 <h3 align="left">Vorlie (Data Contributor)</h3>
+<h2 align="left">Event Testers</h2>
 <h3 align="left">Alexpalexsmalex (Tester)</h3>
 <h3 align="left">Notjolek (Tester)</h3>
-<h3 align="left">Eric Pan (Tester & Bug Hunter)</h3>
+<h3 align="left">Leguchi (Tester)</h3>
+<h3 align="left">Real_duck0 (Tester)</h3>
+<h3 align="left">Robskan (Tester)</h3>
 <h4 align="center">&copy NTTS Event Team</h4>
