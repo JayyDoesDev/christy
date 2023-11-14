@@ -6,7 +6,7 @@
       "ping": "Oh you pinged me! Silly, I'll always be right here waiting for you.~"
     },
     "claim": {
-      "error": "**Eep! Hey, sugarplum. Looks like the code you gave me isn't working... I think someone else might have beaten you to it! That's okay, wait a little and I'll make sure another one drops soon!~ ;)",
+      "error": "**Eep! Hey, sugarplum. Looks like the code you gave me isn't working... I think someone else might have beaten you to it! That's okay, wait a little and I'll make sure another one drops soon!~ ;)**",
       "claimed": "**<a:bell:1169443376714760192> Oh my bells! The latest {goodieName} has been claimed! <a:bell:1169443376714760192>\nKeep an eye out for anymore I might drop!**",
       "congrats": "**Congrats my sugar drop!~ You claimed a {goodieName}!~ Check out your new goodie by using `/inventory`~**"
     },
