@@ -11,7 +11,7 @@ export interface ICommand {
   ctx: Context;
   name: string;
   description: string;
-  onInteraction: (interaction: Interaction) => void;
+  onInteraction: (interaction: Interaction) => Promise<void>;
 }
 
 export interface ICommandOptions {
