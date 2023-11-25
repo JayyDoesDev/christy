@@ -67,6 +67,10 @@ export default class LeaderboardCommand extends Command {
                   })
               )
             ).join("\n")
+          )
+          .replace("{guildGoodieCount}",
+          //@ts-ignore
+          documents.reduce((x, y) => x + y.presentCount + y.candyCount, 0)
           ),
           footer: {
             icon_url: interaction.channel.guild.iconURL({

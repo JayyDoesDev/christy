@@ -44,7 +44,7 @@ export default function (ctx: Context): void {
     const channel: Channel | any = ctx.channels.cache.get(
       process.env.DROPCHANNEL
     );
-    const timers: number[] = [1800000, 3600000]; //[3600000, 7200000, 10800000];
+    const timers: number[] = [90000, 600000, 1200000]; //[3600000, 7200000, 10800000];
     if (await Timer.exists(userId, guildId, redisTimerIdentifier)) {
       console.log("Timer does exist");
       if (await Timer.expired(userId, guildId, redisTimerIdentifier)) {

@@ -18,7 +18,7 @@
     "leaderboard": {
       "leaderboardTitle": "Server Leaderboard",
       "leaderboard": "**Leaderboard! All presents and candies are added up into goodies!**",
-      "leaderboardDescription": "**Ooo! The top 10 users with the most goodies! My special little sweethearts.~**\n{goodies}"
+      "leaderboardDescription": "**Ooo! The top 10 users with the most goodies! My special little sweethearts.~\n:1234: Server Goodie Count: {guildGoodieCount}**\n{goodies}"
     },
     "snowball": {
       "snowballNever": "**Hehe! You haven’t snowballed anyone yet, snickerdoodle.~**",
