@@ -48,7 +48,7 @@ export default function (ctx: Context): void {
     if (await Timer.exists(userId, guildId, redisTimerIdentifier)) {
       console.log("Timer does exist");
       if (await Timer.expired(userId, guildId, redisTimerIdentifier)) {
-        Redis.set(redisKey, redisKey, redisIdentifier);
+        Redis.set(redisKey, redisValue, redisIdentifier);
         const getRedisValue: string = await Redis.get(
           redisKey,
           redisIdentifier
