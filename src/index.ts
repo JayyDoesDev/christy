@@ -4,8 +4,8 @@ import mongoose from "mongoose";
 config();
 const ctx: Context = new Context();
 
-["Event", "Command", "Interaction"].forEach((x) => {
-    require(`./handlers/${x}`).default(ctx);
+["Event", "Command", "Interaction"].forEach(async (x) => {
+    await require(`./handlers/${x}`).default(ctx);
 });
 
 mongoose.connect(process.env.MONGODB, {

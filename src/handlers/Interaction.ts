@@ -4,7 +4,7 @@ import glob from "glob";
 import path from "path";
 import { ZillaCollection } from "@antibot/zilla";
 
-export default function (ctx: Context): void {
+export default async function (ctx: Context): Promise<void> {
   const collection: ZillaCollection<string, Command> = ctx.commands;
 
   for (const [key, value] of collection) {
@@ -18,7 +18,6 @@ export default function (ctx: Context): void {
       ctx.interactions.set(value.interaction.name, value);
     }
   }
-
   ctx.interactions.forEach(async (x) => {
     await ctx.interact.createGuildCommand(process.env.GUILDID, x.interaction);
   });
