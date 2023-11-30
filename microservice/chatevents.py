@@ -74,7 +74,7 @@ Christy = commands.Bot(
 )
 
 message_count = 50
-last_event_trigger = 0
+last_event_trigger = datetime.utcfromtimestamp(0)
 
 @Christy.event
 async def on_message(message:discord.Message):
@@ -85,7 +85,7 @@ async def on_message(message:discord.Message):
 
         message_count += 1
 
-        if message_count >= 50 and (datetime.now().timestamp() - last_event_trigger) >= 7 * 60:
+        if message_count >= 50 and (datetime.now() - last_event_trigger) >= timedelta(minutes=7):
             message_count = 0
             last_event_trigger = datetime.now()
             ctx = await Christy.get_context(message)
