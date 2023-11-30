@@ -85,7 +85,7 @@ async def on_message(message:discord.Message):
 
         message_count += 1
 
-        if message_count >= 50 and (datetime.now() - last_event_trigger) >= timedelta(minutes=7):
+        if message_count >= 50 and (datetime.now() - last_event_trigger) >= timedelta(minutes=7) and not message.author.bot:
             message_count = 0
             last_event_trigger = datetime.now()
             ctx = await Christy.get_context(message)
