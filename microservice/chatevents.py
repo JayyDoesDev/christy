@@ -50,15 +50,16 @@ CHRISTMAS_WORDS = ["snow", "mistletoe", "jingle bells", "reindeer", "sleigh", "s
 
 class Points:
     async def give(userid, amount, event_type = "none"):
-        while os.path.exists("winners.json"):
+        file = os.path.join(os.path.dirname(__file__), "../winners.json")
+        while os.path.exists(file):
             await asyncio.sleep(1)
-            #os.remove("winners.json")
-        with open("winners.json", "w") as file:
+
+        with open(file, "w") as file:
             file.write(
                 json.dumps(
                     {
-                        "id": userid,
-                        "amount": amount,
+                        "id": str(userid),
+                        "amount": str(amount),
                         "event_type": event_type
                     }
                 )
@@ -415,6 +416,11 @@ async def reload(ctx:commands.Context):
     if ctx.message.author.id in [419958345487745035, 746446670228619414]:
         await ctx.reply("Reloading...")
         await Christy.close()
+
+@Christy.event 
+async def on_command_error(ctx, error): 
+    if not isinstance(error, commands.CommandNotFound): 
+        raise error
 
 Christy.run(get_env("TOKEN"))
 

@@ -47,13 +47,13 @@ export namespace GoodieController {
     );
   }
 
-  export async function incrementCandy(userId: Snowflake): Promise<void> {
+  export async function incrementCandy(userId: Snowflake, customAmount?: number): Promise<void> {
     await UserModel.updateOne(
       {
         User: userId,
       },
       {
-        $inc: { candyCount: 1 },
+        $inc: { candyCount: customAmount ? customAmount : 1 },
       },
       {
         new: true,

@@ -1,6 +1,7 @@
 import { Context } from "./structures/Context";
 import { config } from "dotenv";
 import mongoose from "mongoose";
+import { Microservice } from "./utils/Microservice";
 config();
 const ctx: Context = new Context();
 
@@ -8,6 +9,7 @@ const ctx: Context = new Context();
     await require(`./handlers/${x}`).default(ctx);
 });
 
+(async () => { await Microservice.ListenForWinner() })();
 mongoose.connect(process.env.MONGODB, {
     keepAlive: true
 });
