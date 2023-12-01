@@ -1,3 +1,5 @@
+candy_winner = 0
+
 from datetime import datetime, timedelta
 import requests
 import os
@@ -188,6 +190,7 @@ async def realtrigger(ctx: commands.Context, event: str = "", opt_param:str = ""
                 
 
             elif event.lower() == "button":
+                global candy_winner
                 ONGOING_EVENT = True
                 ONGOING_EVENT_DATA["type"] = "button"
 
@@ -196,7 +199,7 @@ async def realtrigger(ctx: commands.Context, event: str = "", opt_param:str = ""
                 channel = Christy.get_channel(DROP_CHANNEL_ID)
                 candy_winner = 0
                 async def button_cb(interaction: discord.Interaction):
-                    global ONGOING_EVENT
+                    global ONGOING_EVENT, ONGOING_EVENT_DATA, candy_winner
                     if ONGOING_EVENT:
                         ONGOING_EVENT = False
                         ONGOING_EVENT_DATA = {}
