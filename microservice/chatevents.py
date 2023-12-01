@@ -9,7 +9,8 @@ import random
 import json
 import html
 
-load_dotenv("runtime/.env")
+dotenv_path = os.path.join(os.path.dirname(__file__), "../.env")
+load_dotenv(dotenv_path)
 
 def get_env(name): return os.getenv(name)
 
