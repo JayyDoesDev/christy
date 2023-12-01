@@ -417,6 +417,11 @@ async def reload(ctx:commands.Context):
         await ctx.reply("Reloading...")
         await Christy.close()
 
+@Christy.event 
+async def on_command_error(ctx, error): 
+    if not isinstance(error, commands.CommandNotFound): 
+        raise error
+
 Christy.run(get_env("TOKEN"))
 
 relaunch()
