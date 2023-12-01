@@ -17,7 +17,8 @@ def relaunch():
     subprocess.call([python, script])
     sys.exit()
 
-load_dotenv("runtime/.env")
+dotenv_path = os.path.join(os.path.dirname(__file__), "../.env")
+load_dotenv(dotenv_path)
 
 def get_env(name): return os.getenv(name)
 
@@ -49,10 +50,10 @@ CHRISTMAS_WORDS = ["snow", "mistletoe", "jingle bells", "reindeer", "sleigh", "s
 
 class Points:
     async def give(userid, amount, event_type = "none"):
-        while os.path.exists("runtime/winners.json"):
+        while os.path.exists("winners.json"):
             await asyncio.sleep(1)
-            #os.remove("runtime/winners.json")
-        with open("runtime/winners.json", "w") as file:
+            #os.remove("winners.json")
+        with open("winners.json", "w") as file:
             file.write(
                 json.dumps(
                     {
