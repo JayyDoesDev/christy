@@ -107,7 +107,7 @@ async def on_ready():
     await Christy.tree.sync()
     
 
-@Christy.tree.command(
+@Christy.hybrid_command(
         name="trigger_event",
         description="[Staff Only] Manually trigger a chat event"
 )
@@ -119,26 +119,25 @@ async def on_ready():
             discord.app_commands.Choice(name='Unscramble Christmas word game', value="unscramble"),
             discord.app_commands.Choice(name='Bigger Lower Number Game', value="number")
 ])
-async def trigger(interaction: discord.Interaction, event: discord.app_commands.Choice[str], opt_param:str = ""):
+async def trigger(ctx, event: discord.app_commands.Choice[str], opt_param:str = ""):
         event = event.value
+        print("event thing", event)
         global ONGOING_EVENT
-        if not interaction.user.guild_permissions.ban_members:
-            message = await interaction.response.send_message("You don't have permission to use this command.", ephemeral=True)
-        elif interaction.guild.id != int(get_env("GUILDID")):
-            message = await interaction.response.send_message("get denied", ephemeral=True)
+        if not ctx.message.author.guild_permissions.ban_members:
+            message = await ctx.send("You don't have permission to use this command.", ephemeral=True)
+        elif ctx.message.guild.id != int(get_env("GUILDID")):
+            message = await ctx.send("get denied", ephemeral=True)
             await asyncio.sleep(3)
             return await message.delete()
 
         if ONGOING_EVENT == True:
-            return await interaction.response.send_message("There is already an ongoing event!", ephemeral=True)
+            return await ctx.send("There is already an ongoing event!", ephemeral=True)
 
         if not event.lower() in EVENTS:
-            return await interaction.response.send_message(f"Please choose a valid event! Usage: {Christy.user.mention} trigger `EVENT_NAME`", ephemeral=True)
+            return await ctx.send(f"Please choose a valid event! Usage: {Christy.user.mention} trigger `EVENT_NAME`", ephemeral=True)
         
-        Event_Status = await interaction.response.send_message(f"Triggering Event in <#{DROP_CHANNEL_ID}>")
+        Event_Status = await ctx.send(f"Triggering Event in <#{DROP_CHANNEL_ID}>")
         
-
-        ctx = await Christy.get_context(interaction.message)
 
         await realtrigger(ctx, event, opt_param)
 
