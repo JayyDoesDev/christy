@@ -50,10 +50,11 @@ CHRISTMAS_WORDS = ["snow", "mistletoe", "jingle bells", "reindeer", "sleigh", "s
 
 class Points:
     async def give(userid, amount, event_type = "none"):
-        while os.path.exists("winners.json"):
+        file = os.path.join(os.path.dirname(__file__), "../winners.json")
+        while os.path.exists(file):
             await asyncio.sleep(1)
-            #os.remove("winners.json")
-        with open("winners.json", "w") as file:
+
+        with open(file, "w") as file:
             file.write(
                 json.dumps(
                     {
