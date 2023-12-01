@@ -23,8 +23,5 @@ elif platform.system().lower() == "darwin":
     activate_cmd = f"source"
 else:
     activate_cmd = f"activate"
-if os.path.exists("runtime/.env"):
-    print("Starting bot...")
-    run_commands_concurrently(activate_cmd + " .env && yarn install && yarn start", "cd microservice && python3 chatevents.py")
-else:
-    print("Installed, Please go edit runtime/.env")
+print("Starting bot...")
+run_commands_concurrently(activate_cmd + " .env && yarn install && yarn start", "cd microservice && python3 chatevents.py")
