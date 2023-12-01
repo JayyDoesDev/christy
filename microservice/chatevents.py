@@ -194,17 +194,20 @@ async def realtrigger(ctx: commands.Context, event: str = "", opt_param:str = ""
                 
 
                 channel = Christy.get_channel(DROP_CHANNEL_ID)
-
+                candy_winner = 0
                 async def button_cb(interaction: discord.Interaction):
                     global ONGOING_EVENT
                     if ONGOING_EVENT:
                         ONGOING_EVENT = False
                         ONGOING_EVENT_DATA = {}
-                        await interaction.response.send_message("You clicked the button!", ephemeral=True)
-                        await interaction.channel.send(f"{interaction.user.mention} pressed the button first and has recieved 1 candy!")
-                        await interaction.message.edit(embed=Event_Message.embeds[0], view=None)
+                        await asyncio.sleep(random.randint(0,4) * .1)
+                        if candy_winner == 0:
+                            candy_winner = interaction.user.id
+                            await interaction.response.send_message("You clicked the button!", ephemeral=True)
+                            await interaction.channel.send(f"<@{candy_winner}> pressed the button first and has recieved 1 candy!")
+                            await interaction.message.edit(embed=Event_Message.embeds[0], view=None)
 
-                        await Points.give(interaction.user.id, 1, "button")
+                            await Points.give(candy_winner, 1, "button")
                     else:
                         await interaction.response.send_message("Someone else has already clicked the button!", ephemeral=True)
 
