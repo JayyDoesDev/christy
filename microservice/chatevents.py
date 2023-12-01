@@ -8,20 +8,26 @@ import asyncio
 import random
 import json
 import html
+import subprocess
+import sys
 
-dotenv_path = os.path.join(os.path.dirname(__file__), "../.env")
-load_dotenv(dotenv_path)
+def relaunch():
+    python = sys.executable
+    script = sys.argv[0]
+    subprocess.call([python, script])
+    sys.exit()
+
+load_dotenv("runtime/.env")
 
 def get_env(name): return os.getenv(name)
 
 def fix_encoding(input_string):
-    # Use HTML unescape to replace HTML-encoded characters
     fixed_string = html.unescape(input_string)
     return fixed_string
 
 def prevent_googling(string:str):
     string = fix_encoding(string)
-    return string.replace("a", "а").replace("c", "с").replace("e", "е").replace("h" ,"һ").replace("i", "і").replace("j", "ј").replace("y","у").replace("o","о").replace("p", "р").replace(" ", " ")
+    return string.replace("a", "а").replace("c", "с").replace("e", "е").replace("h" ,"һ").replace("i", "і").replace("j", "ј").replace("y","у").replace("o","о").replace("p", "р").replace(" ", " ")
 
 DROP_CHANNEL_ID = int(get_env("DROPCHANNEL"))
 
@@ -137,266 +143,282 @@ async def trigger(interaction: discord.Interaction, event: discord.app_commands.
 
 # why is this not one command? @Marie trigger can be called via a command, while this function cannot for security and ease of calling it via code
 async def realtrigger(ctx: commands.Context, event: str = "", opt_param:str = ""):
-        global ONGOING_EVENT, ONGOING_EVENT_DATA, EVENTS, DROP_CHANNEL_ID
-    
-        if event.lower() == "unscramble":
-            ONGOING_EVENT = True
-            scramble = unscramble.get_scramble()
-            ONGOING_EVENT_DATA["type"] = "unscramble"
-            ONGOING_EVENT_DATA["answer"] = scramble[1]
-
-            
-
-            channel = Christy.get_channel(DROP_CHANNEL_ID)
-
-            Event_Message = await channel.send(
-                embed = discord.Embed(
-                    title="Chat Event",
-                    description=f"Unscramble this word for candy: `{scramble[0]}`",
-                    color=discord.Color.blurple()
-                )
-            )
-
-            def check(message):
-                return (
-                    message.channel.id == DROP_CHANNEL_ID
-                    and message.content.lower() == ONGOING_EVENT_DATA["answer"].lower()
-                    and message.author != Christy.user
-                )
-
-            try:
-                winner_message = await Christy.wait_for("message", check=check, timeout=60)
-                winner = winner_message.author
-                await winner_message.add_reaction("✅")
-                await channel.send(f"{winner.mention} has won the chat event and recieved 1 Candy!")
-                await Points.give(winner.id, 1, "unscramble")
-            except asyncio.TimeoutError:
-                await channel.send("No one guessed the correct answer. Event ended.")
-            
-            ONGOING_EVENT = False
-            ONGOING_EVENT_DATA = {}
-
-            
-
-        elif event.lower() == "button":
-            ONGOING_EVENT = True
-            ONGOING_EVENT_DATA["type"] = "button"
-
-            
-
-            channel = Christy.get_channel(DROP_CHANNEL_ID)
-
-            async def button_cb(interaction: discord.Interaction):
-                global ONGOING_EVENT
-                if ONGOING_EVENT:
-                    ONGOING_EVENT = False
-                    ONGOING_EVENT_DATA = {}
-                    await interaction.response.send_message("You clicked the button!", ephemeral=True)
-                    await interaction.channel.send(f"{interaction.user.mention} pressed the button first and has recieved 1 candy!")
-                    await interaction.message.edit(embed=Event_Message.embeds[0], view=None)
-
-                    await Points.give(interaction.user.id, 1, "button")
-                else:
-                    await interaction.response.send_message("Someone else has already clicked the button!", ephemeral=True)
-
-            button_label = "Click me for candy!"
-            button = discord.ui.Button(style=discord.ButtonStyle.primary, label=button_label, custom_id="button_candy")
-            button.callback = button_cb
-
-            View = discord.ui.View()
-            View.add_item(button)
-
-            Event_Message = await channel.send(
-                embed=discord.Embed(
-                    title="Chat Event",
-                    description=f"Click the button to get candy!",
-                    color=discord.Color.blurple()
-                ),
-                view=View
-            )
-
-        if event.lower() == "number":
-            ONGOING_EVENT = True
-            scramble = unscramble.get_scramble()
-            ONGOING_EVENT_DATA["type"] = "number"
-            ONGOING_EVENT_DATA["answer"] = random.randint(1,1000) # can be guessed if someone got the random key but should be fine
-
-            
-
-            channel = Christy.get_channel(DROP_CHANNEL_ID)
-
-            Event_Message = await channel.send(
-                embed = discord.Embed(
-                    title="Chat Event",
-                    description=f"Guess the number I'm thinking of for candy! 1-1000",
-                    color=discord.Color.blurple()
-                )
-            )
-
-            def check(message):
-                return True
-
-            try:
-                won = 0
-                while won == 0:
-                    winner_message = await Christy.wait_for("message", check=check, timeout=360)
-                    if winner_message.channel.id == DROP_CHANNEL_ID:
-                        try:
-                            if int(winner_message.content.strip()) == ONGOING_EVENT_DATA["answer"]:
-                                won = 1
-                                winner = winner_message.author
-                                await winner_message.add_reaction("✅")
-                                await channel.send(f"{winner.mention} has won the chat event and recieved 1 Candy!")
-                                await Points.give(winner.id, 1, "number")
-                            elif int(winner_message.content.strip()) < ONGOING_EVENT_DATA["answer"]:
-                                await winner_message.reply("Higher!", mention_author=False)
-                            else:
-                                await winner_message.reply("Lower!", mention_author=False)
-                        except:
-                            ...
-            except asyncio.TimeoutError:
-                await channel.send("No one guessed the correct answer. Event ended.")
-            
-            ONGOING_EVENT = False
-            ONGOING_EVENT_DATA = {}
-
-        elif event.lower() == "trivia":
-            ONGOING_EVENT = True
-            ONGOING_EVENT_DATA["type"] = "trivia"
-
-            res = requests.get("https://opentdb.com/api.php?amount=10&type=multiple").json()["results"][0]
-            ONGOING_EVENT_DATA["answer"] = res["correct_answer"]
-            opts = [res["correct_answer"]] + res["incorrect_answers"]
-            random.shuffle(opts)
-            ONGOING_EVENT_DATA["options"] = opts
-
-            
-
-            channel = Christy.get_channel(DROP_CHANNEL_ID)
-
-            await channel.send("**Trivia question starting in 5 seconds!**")
-
-            await asyncio.sleep(5)
-
-            strok = "\n".join(ONGOING_EVENT_DATA["options"])
-
-            await channel.send(
-                embed=discord.Embed(
-                    title="Trivia - Single Question",
-                    description=f"{prevent_googling(res['question'])}\n\n{strok}\n\nSend your answers in chat! First to get it right will get candy!",
-                    color=discord.Color.blurple()
-                )
-            )
-
-            def check(message):
-                return (
-                    message.channel.id == DROP_CHANNEL_ID
-                    and message.content.lower() == ONGOING_EVENT_DATA["answer"].lower()
-                    and message.author != Christy.user
-                )
-
-            try:
-                winner_message = await Christy.wait_for("message", check=check, timeout=120)
-                winner = winner_message.author
-                await winner_message.add_reaction("✅")
-                await channel.send(f"{winner.mention} has won the chat event and recieved 1 Candy!")
-                await Points.give(winner.id, 1, "trivia")
-            except asyncio.TimeoutError:
-                await channel.send("No one guessed the correct answer. Event ended.")
-            
-            ONGOING_EVENT = False
-            ONGOING_EVENT_DATA = {}
         
-        elif event.lower() == "trivia_game":
-            leaderboard = {}
-            amount = int(opt_param.strip())
+        try:
+            global ONGOING_EVENT, ONGOING_EVENT_DATA, EVENTS, DROP_CHANNEL_ID
+        
+            if event.lower() == "unscramble":
+                ONGOING_EVENT = True
+                scramble = unscramble.get_scramble()
+                ONGOING_EVENT_DATA["type"] = "unscramble"
+                ONGOING_EVENT_DATA["answer"] = scramble[1]
 
-            if ONGOING_EVENT:
-                await ctx.reply("There's already a event in progress.")
-                return
+                
 
-            ONGOING_EVENT = True
-            ONGOING_EVENT_DATA["type"] = "trivia"
-            ONGOING_EVENT_DATA["questions"] = []
+                channel = Christy.get_channel(DROP_CHANNEL_ID)
 
-            for res in requests.get(f"https://opentdb.com/api.php?amount={amount}&type=multiple").json()["results"]:
-                opts = [res["correct_answer"]] + res["incorrect_answers"]
-                random.shuffle(opts)
-                ONGOING_EVENT_DATA["questions"].append(
-                    {"question": res["question"], "answer": res["correct_answer"], "options": opts}
-                )
-
-            
-
-            channel = ctx.guild.get_channel(DROP_CHANNEL_ID)
-
-            await channel.send("**Trivia Game Beginning in 30 seconds...**")
-
-            await asyncio.sleep(15)
-
-            for question_number, question_data in enumerate(ONGOING_EVENT_DATA["questions"], start=1):
-
-                await channel.send(f"**Trivia Question {question_number}/{amount} -** starting in 15 seconds!")
-
-                await asyncio.sleep(15)
-
-                options = '\n'.join(question_data["options"])
-
-                await channel.send(
-                    embed=discord.Embed(
-                        title=f"Trivia - Question {question_number}/{amount}",
-                        description=f"{prevent_googling(question_data['question'])}\n\n{options}\n\nSend your answers in chat! First to get it right will get a point!",
-                        color=discord.Color.blurple(),
+                Event_Message = await channel.send(
+                    embed = discord.Embed(
+                        title="Chat Event",
+                        description=f"Unscramble this word for candy: `{scramble[0]}`",
+                        color=discord.Color.blurple()
                     )
                 )
 
                 def check(message):
                     return (
                         message.channel.id == DROP_CHANNEL_ID
-                        and message.content.lower() == question_data["answer"].lower()
-                        and message.author != ctx.bot.user
+                        and message.content.lower() == ONGOING_EVENT_DATA["answer"].lower()
+                        and message.author != Christy.user
                     )
 
                 try:
-                    winner_message = await ctx.bot.wait_for("message", check=check, timeout=120)
+                    winner_message = await Christy.wait_for("message", check=check, timeout=60)
                     winner = winner_message.author
                     await winner_message.add_reaction("✅")
-                    await channel.send(f"{winner.mention} has won the trivia question and received 1 point!")
-                    if winner.id in leaderboard:
-                        leaderboard[winner.id] += 1
-                    else:
-                        leaderboard[winner.id] = 1
+                    await channel.send(f"{winner.mention} has won the chat event and recieved 1 Candy!")
+                    await Points.give(winner.id, 1, "unscramble")
                 except asyncio.TimeoutError:
-                    await channel.send("No one guessed the correct answer for this question.")
+                    await channel.send("No one guessed the correct answer. Event ended.")
+                
+                ONGOING_EVENT = False
+                ONGOING_EVENT_DATA = {}
 
-                await asyncio.sleep(3)
+                
 
-                leaderboard = dict(sorted(leaderboard.items(), key=lambda item: item[1], reverse=True))
+            elif event.lower() == "button":
+                ONGOING_EVENT = True
+                ONGOING_EVENT_DATA["type"] = "button"
 
-                leaderboard_text = ""
+                
 
-                first_15_users = dict(list(leaderboard.items())[:15])
+                channel = Christy.get_channel(DROP_CHANNEL_ID)
 
-                place = 1
-                for userid, score in first_15_users.items():
-                    leaderboard_text += f"`{place}. ` <@{userid}> - **{score} candies**\n"
-                    place += 1
+                async def button_cb(interaction: discord.Interaction):
+                    global ONGOING_EVENT
+                    if ONGOING_EVENT:
+                        ONGOING_EVENT = False
+                        ONGOING_EVENT_DATA = {}
+                        await interaction.response.send_message("You clicked the button!", ephemeral=True)
+                        await interaction.channel.send(f"{interaction.user.mention} pressed the button first and has recieved 1 candy!")
+                        await interaction.message.edit(embed=Event_Message.embeds[0], view=None)
 
-                await channel.send(embed=discord.Embed(
-                    title="Trivia Game - Leaderboard",
-                    description=leaderboard_text,
-                    color=discord.Color.blurple()
-                ))
+                        await Points.give(interaction.user.id, 1, "button")
+                    else:
+                        await interaction.response.send_message("Someone else has already clicked the button!", ephemeral=True)
 
-            first_place = dict(list(leaderboard.items())[:1])
+                button_label = "Click me for candy!"
+                button = discord.ui.Button(style=discord.ButtonStyle.primary, label=button_label, custom_id="button_candy")
+                button.callback = button_cb
 
-            for userid, score in first_place.items():
-                await channel.send(f"**Event Ended - <@{userid}> has won the trivia game with **{score}** points!**")
+                View = discord.ui.View()
+                View.add_item(button)
+
+                Event_Message = await channel.send(
+                    embed=discord.Embed(
+                        title="Chat Event",
+                        description=f"Click the button to get candy!",
+                        color=discord.Color.blurple()
+                    ),
+                    view=View
+                )
+
+            if event.lower() == "number":
+                ONGOING_EVENT = True
+                scramble = unscramble.get_scramble()
+                ONGOING_EVENT_DATA["type"] = "number"
+                ONGOING_EVENT_DATA["answer"] = random.randint(1,1000) # can be guessed if someone got the random key but should be fine
+
+                
+
+                channel = Christy.get_channel(DROP_CHANNEL_ID)
+
+                Event_Message = await channel.send(
+                    embed = discord.Embed(
+                        title="Chat Event",
+                        description=f"Guess the number I'm thinking of for candy! 1-1000",
+                        color=discord.Color.blurple()
+                    )
+                )
+
+                def check(message):
+                    return True
+
+                try:
+                    won = 0
+                    while won == 0:
+                        winner_message = await Christy.wait_for("message", check=check, timeout=360)
+                        if winner_message.channel.id == DROP_CHANNEL_ID:
+                            try:
+                                if int(winner_message.content.strip()) == ONGOING_EVENT_DATA["answer"]:
+                                    won = 1
+                                    winner = winner_message.author
+                                    await winner_message.add_reaction("✅")
+                                    await channel.send(f"{winner.mention} has won the chat event and recieved 1 Candy!")
+                                    await Points.give(winner.id, 1, "number")
+                                elif int(winner_message.content.strip()) < ONGOING_EVENT_DATA["answer"]:
+                                    await winner_message.reply("Higher!", mention_author=False)
+                                else:
+                                    await winner_message.reply("Lower!", mention_author=False)
+                            except:
+                                ...
+                except asyncio.TimeoutError:
+                    await channel.send("No one guessed the correct answer. Event ended.")
+                
+                ONGOING_EVENT = False
+                ONGOING_EVENT_DATA = {}
+
+            elif event.lower() == "trivia":
+                ONGOING_EVENT = True
+                ONGOING_EVENT_DATA["type"] = "trivia"
+
+                res = requests.get("https://opentdb.com/api.php?amount=10&type=multiple").json()["results"][0]
+                ONGOING_EVENT_DATA["answer"] = res["correct_answer"]
+                opts = [res["correct_answer"]] + res["incorrect_answers"]
+                random.shuffle(opts)
+                ONGOING_EVENT_DATA["options"] = opts
+
+                
+
+                channel = Christy.get_channel(DROP_CHANNEL_ID)
+
+                await channel.send("**Trivia question starting in 5 seconds!**")
+
+                await asyncio.sleep(5)
+
+                strok = "\n".join(ONGOING_EVENT_DATA["options"])
+
+                await channel.send(
+                    embed=discord.Embed(
+                        title="Trivia - Single Question",
+                        description=f"{prevent_googling(res['question'])}\n\n{strok}\n\nSend your answers in chat! First to get it right will get candy!",
+                        color=discord.Color.blurple()
+                    )
+                )
+
+                def check(message):
+                    return (
+                        message.channel.id == DROP_CHANNEL_ID
+                        and message.content.lower() == ONGOING_EVENT_DATA["answer"].lower()
+                        and message.author != Christy.user
+                    )
+
+                try:
+                    winner_message = await Christy.wait_for("message", check=check, timeout=120)
+                    winner = winner_message.author
+                    await winner_message.add_reaction("✅")
+                    await channel.send(f"{winner.mention} has won the chat event and recieved 1 Candy!")
+                    await Points.give(winner.id, 1, "trivia")
+                except asyncio.TimeoutError:
+                    await channel.send("No one guessed the correct answer. Event ended.")
+                
+                ONGOING_EVENT = False
+                ONGOING_EVENT_DATA = {}
             
-            for userid,score in leaderboard.items():
-                await Points.give(userid, score, "trivia_game")
+            elif event.lower() == "trivia_game":
+                leaderboard = {}
+                amount = int(opt_param.strip())
 
+                if ONGOING_EVENT:
+                    await ctx.reply("There's already a event in progress.")
+                    return
+
+                ONGOING_EVENT = True
+                ONGOING_EVENT_DATA["type"] = "trivia"
+                ONGOING_EVENT_DATA["questions"] = []
+
+                for res in requests.get(f"https://opentdb.com/api.php?amount={amount}&type=multiple").json()["results"]:
+                    opts = [res["correct_answer"]] + res["incorrect_answers"]
+                    random.shuffle(opts)
+                    ONGOING_EVENT_DATA["questions"].append(
+                        {"question": res["question"], "answer": res["correct_answer"], "options": opts}
+                    )
+
+                
+
+                channel = ctx.guild.get_channel(DROP_CHANNEL_ID)
+
+                await channel.send("**Trivia Game Beginning in 30 seconds...**")
+
+                await asyncio.sleep(15)
+
+                for question_number, question_data in enumerate(ONGOING_EVENT_DATA["questions"], start=1):
+
+                    await channel.send(f"**Trivia Question {question_number}/{amount} -** starting in 15 seconds!")
+
+                    await asyncio.sleep(15)
+
+                    options = '\n'.join(question_data["options"])
+
+                    await channel.send(
+                        embed=discord.Embed(
+                            title=f"Trivia - Question {question_number}/{amount}",
+                            description=f"{prevent_googling(question_data['question'])}\n\n{options}\n\nSend your answers in chat! First to get it right will get a point!",
+                            color=discord.Color.blurple(),
+                        )
+                    )
+
+                    def check(message):
+                        return (
+                            message.channel.id == DROP_CHANNEL_ID
+                            and message.content.lower() == question_data["answer"].lower()
+                            and message.author != ctx.bot.user
+                        )
+
+                    try:
+                        winner_message = await ctx.bot.wait_for("message", check=check, timeout=120)
+                        winner = winner_message.author
+                        await winner_message.add_reaction("✅")
+                        await channel.send(f"{winner.mention} has won the trivia question and received 1 point!")
+                        if winner.id in leaderboard:
+                            leaderboard[winner.id] += 1
+                        else:
+                            leaderboard[winner.id] = 1
+                    except asyncio.TimeoutError:
+                        await channel.send("No one guessed the correct answer for this question.")
+
+                    await asyncio.sleep(3)
+
+                    leaderboard = dict(sorted(leaderboard.items(), key=lambda item: item[1], reverse=True))
+
+                    leaderboard_text = ""
+
+                    first_15_users = dict(list(leaderboard.items())[:15])
+
+                    place = 1
+                    for userid, score in first_15_users.items():
+                        leaderboard_text += f"`{place}. ` <@{userid}> - **{score} candies**\n"
+                        place += 1
+
+                    await channel.send(embed=discord.Embed(
+                        title="Trivia Game - Leaderboard",
+                        description=leaderboard_text,
+                        color=discord.Color.blurple()
+                    ))
+
+                first_place = dict(list(leaderboard.items())[:1])
+
+                for userid, score in first_place.items():
+                    await channel.send(f"**Event Ended - <@{userid}> has won the trivia game with **{score}** points!**")
+                
+                for userid,score in leaderboard.items():
+                    await Points.give(userid, score, "trivia_game")
+
+                ONGOING_EVENT = False
+                ONGOING_EVENT_DATA = {}
+
+        except Exception as Error:
+            print(Error)
             ONGOING_EVENT = False
             ONGOING_EVENT_DATA = {}
+            print("A error occured")
+
+@Christy.command()
+async def reload(ctx:commands.Context):
+    if ctx.message.author.id in [419958345487745035, 746446670228619414]:
+        await ctx.reply("Reloading...")
+        await Christy.close()
 
 Christy.run(get_env("TOKEN"))
+
+relaunch()
