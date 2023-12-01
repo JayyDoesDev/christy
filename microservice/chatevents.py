@@ -52,9 +52,11 @@ class Points:
     async def give(userid, amount, event_type = "none"):
         file = os.path.join(os.path.dirname(__file__), "../winners.json")
         while os.path.exists(file):
+            print("File exists, waiting")
             await asyncio.sleep(1)
 
         with open(file, "w") as file:
+            print("Writing File")
             file.write(
                 json.dumps(
                     {
@@ -66,6 +68,7 @@ class Points:
             )
 
             file.close()
+        print("Done Writing at", file)
 
 class unscramble:
     def get_scramble():
