@@ -106,7 +106,6 @@ async def on_ready():
     print(f"Logged into {Christy.user} ({Christy.user.id})")
     await Christy.tree.sync()
     
-
 @Christy.hybrid_command(
         name="trigger_event",
         description="[Staff Only] Manually trigger a chat event"
@@ -124,11 +123,9 @@ async def trigger(ctx, event: discord.app_commands.Choice[str], opt_param:str = 
         print("event thing", event)
         global ONGOING_EVENT
         if not ctx.message.author.guild_permissions.ban_members:
-            message = await ctx.send("You don't have permission to use this command.", ephemeral=True)
+            return await ctx.send("You don't have permission to use this command.", ephemeral=True)
         elif ctx.message.guild.id != int(get_env("GUILDID")):
-            message = await ctx.send("get denied", ephemeral=True)
-            await asyncio.sleep(3)
-            return await message.delete()
+            return await ctx.send("get denied", ephemeral=True)
 
         if ONGOING_EVENT == True:
             return await ctx.send("There is already an ongoing event!", ephemeral=True)
