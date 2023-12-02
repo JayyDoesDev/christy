@@ -7,6 +7,7 @@ export namespace Microservice {
         const winnerPath: string = path.join(process.cwd(), "winners.json")
       if (fs.existsSync(winnerPath)) {
         console.log("Winner file exists")
+        delete require.cache[require.resolve(winnerPath)];
         const winner = require(winnerPath);
         const winnerId = String(winner.id);
         const winnerAmount = winner.amount;
