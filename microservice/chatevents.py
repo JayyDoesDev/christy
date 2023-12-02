@@ -1,3 +1,5 @@
+candy_winner = 0
+
 from datetime import datetime, timedelta
 import requests
 import os
@@ -52,9 +54,11 @@ class Points:
     async def give(userid, amount, event_type = "none"):
         file = os.path.join(os.path.dirname(__file__), "../winners.json")
         while os.path.exists(file):
+            print("File exists, waiting")
             await asyncio.sleep(1)
 
         with open(file, "w") as file:
+            print("Writing File")
             file.write(
                 json.dumps(
                     {
@@ -66,6 +70,7 @@ class Points:
             )
 
             file.close()
+        print("Done Writing at", file)
 
 class unscramble:
     def get_scramble():
@@ -185,23 +190,27 @@ async def realtrigger(ctx: commands.Context, event: str = "", opt_param:str = ""
                 
 
             elif event.lower() == "button":
+                global candy_winner
                 ONGOING_EVENT = True
                 ONGOING_EVENT_DATA["type"] = "button"
 
                 
 
                 channel = Christy.get_channel(DROP_CHANNEL_ID)
-
+                candy_winner = 0
                 async def button_cb(interaction: discord.Interaction):
-                    global ONGOING_EVENT
+                    global ONGOING_EVENT, ONGOING_EVENT_DATA, candy_winner
                     if ONGOING_EVENT:
                         ONGOING_EVENT = False
                         ONGOING_EVENT_DATA = {}
-                        await interaction.response.send_message("You clicked the button!", ephemeral=True)
-                        await interaction.channel.send(f"{interaction.user.mention} pressed the button first and has recieved 1 candy!")
-                        await interaction.message.edit(embed=Event_Message.embeds[0], view=None)
+                        await asyncio.sleep(random.randint(0,4) * .1)
+                        if candy_winner == 0:
+                            candy_winner = interaction.user.id
+                            await interaction.response.send_message("You clicked the button!", ephemeral=True)
+                            await interaction.channel.send(f"<@{candy_winner}> pressed the button first and has recieved 1 candy!")
+                            await interaction.message.edit(embed=Event_Message.embeds[0], view=None)
 
-                        await Points.give(interaction.user.id, 1, "button")
+                            await Points.give(candy_winner, 1, "button")
                     else:
                         await interaction.response.send_message("Someone else has already clicked the button!", ephemeral=True)
 
