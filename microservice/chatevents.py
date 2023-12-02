@@ -321,7 +321,7 @@ async def realtrigger(ctx: commands.Context, event: str = "", opt_param:str = ""
                 def check(message):
                     return (
                         message.channel.id == DROP_CHANNEL_ID
-                        and normalize_and_compare_strings(message.content, ONGOING_EVENT_DATA["answer"])
+                        and normalize_and_compare_strings(message.content, fix_encoding(ONGOING_EVENT_DATA["answer"]))
                         and message.author != Christy.user
                     )
 
@@ -383,7 +383,7 @@ async def realtrigger(ctx: commands.Context, event: str = "", opt_param:str = ""
                     def check(message):
                         return (
                             message.channel.id == DROP_CHANNEL_ID
-                            and normalize_and_compare_strings(message.content, ONGOING_EVENT_DATA["answer"])
+                            and normalize_and_compare_strings(message.content, fix_encoding(ONGOING_EVENT_DATA["answer"]))
                             and message.author != ctx.bot.user
                         )
 
