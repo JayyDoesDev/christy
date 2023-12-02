@@ -7,13 +7,52 @@ import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 import asyncio
-import random
 import json
 import html
 import subprocess
 import sys
 from unidecode import unidecode
 from difflib import SequenceMatcher
+import secrets
+
+class random:
+    # hi random ava person
+    # i already knew this was a vuln but like
+    # i wasnt expecting anyone to actually take time to exploit it
+    # anyways hope ur happy now lol
+    
+    # i know this is still crackable but that is going to be way harder to do
+    # istg if you crack this again im gonna change everything to http requests with authentication
+
+    def randint(start, end):
+        if not isinstance(start, int) or not isinstance(end, int):
+            raise ValueError("Both start and end must be integers")
+
+        if start > end:
+            raise ValueError("Start value must be less than or equal to end value")
+
+        return secrets.randbelow(end - start + 1) + start
+    
+    def shuffle(lst):
+        if not isinstance(lst, list):
+            raise ValueError("Input must be a list")
+
+        n = len(lst)
+
+        for i in range(n - 1, 0, -1):
+            j = secrets.randbelow(i + 1)
+            lst[i], lst[j] = lst[j], lst[i]
+
+    def choice(lst):
+        if not isinstance(lst, list):
+            raise ValueError("Input must be a list")
+
+        if not lst:
+            raise ValueError("List must not be empty")
+
+        index = secrets.randbelow(len(lst))
+        return lst[index]
+
 
 def normalize_and_compare_strings(str1, str2):
     normalized_str1 = unidecode(str1).lower()
@@ -41,6 +80,8 @@ def fix_encoding(input_string):
     fixed_string = html.unescape(input_string)
     return fixed_string
 
+# todo: move to http request
+# todo2: change how the string is manipulated
 def prevent_googling(string:str):
     string = fix_encoding(string)
     return string.replace("a", "а").replace("c", "с").replace("e", "е").replace("h" ,"һ").replace("i", "і").replace("j", "ј").replace("y","у").replace("o","о").replace("p", "р").replace(" ", " ")
@@ -52,6 +93,7 @@ ONGOING_EVENT_DATA = {}
 RANDOM_EVENTS = [
     "button", "trivia", "unscramble", "number"
 ]
+
 EVENTS = [
     "button",
     "trivia",
@@ -60,8 +102,10 @@ EVENTS = [
     "number"
 ]
 
-CHRISTMAS_WORDS = get_env("CHRISTMASWORDS")
-
+# yall really made me do this - im moving this to .env, if you are running this yourself, swap the commented lines
+# (also changing the answers btw)
+#CHRISTMAS_WORDS = ["snow", "mistletoe", "jingle bells", "reindeer", "sleigh", "santa claus", "stockings", "candy cane", "tinsel", "wreath", "gingerbread", "nativity", "yule log", "nutcracker", "eggnog", "ornament", "christmas tree", "presents", "snowman", "holly", "merry", "joy", "carol", "sleigh ride", "frosty", "cider", "chimney", "tidings", "bells", "advent", "candle", "grinch", "star", "fruitcake", "fireplace", "garland", "poinsettia", "roast", "wassail", "chestnuts", "north pole", "elf", "christmas eve", "ho-ho-ho", "wise men", "drummer boy", "angel", "yuletide", "cinnamon", "jolly"]
+CHRISTMAS_WORDS = json.loads(os.environ['CHRISTMAS_WORDS'])
 
 class Points:
     async def give(userid, amount, event_type = "none"):
@@ -84,7 +128,6 @@ class Points:
 
             file.close()
 
-        os.system(f"cat /root/marie/winners.json")
         print("Done Writing at", file)
 
 class unscramble:
