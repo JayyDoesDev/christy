@@ -12,6 +12,19 @@ import json
 import html
 import subprocess
 import sys
+from unidecode import unidecode
+from difflib import SequenceMatcher
+
+def normalize_and_compare_strings(str1, str2):
+    normalized_str1 = unidecode(str1).lower()
+    normalized_str2 = unidecode(str2).lower()
+
+    similarity_ratio = SequenceMatcher(None, normalized_str1, normalized_str2).ratio()
+
+    if similarity_ratio > 0.85:
+        return True
+    else:
+        return False
 
 def relaunch():
     python = sys.executable
@@ -63,13 +76,15 @@ class Points:
                 json.dumps(
                     {
                         "id": str(userid),
-                        "amount": str(amount),
+                        "amount": int(amount),
                         "event_type": event_type
                     }
                 )
             )
 
             file.close()
+
+        os.system(f"cat /root/marie/winners.json")
         print("Done Writing at", file)
 
 class unscramble:
@@ -306,7 +321,7 @@ async def realtrigger(ctx: commands.Context, event: str = "", opt_param:str = ""
                 def check(message):
                     return (
                         message.channel.id == DROP_CHANNEL_ID
-                        and message.content.lower() == ONGOING_EVENT_DATA["answer"].lower()
+                        and normalize_and_compare_strings(message.content, ONGOING_EVENT_DATA["answer"])
                         and message.author != Christy.user
                     )
 
@@ -368,7 +383,7 @@ async def realtrigger(ctx: commands.Context, event: str = "", opt_param:str = ""
                     def check(message):
                         return (
                             message.channel.id == DROP_CHANNEL_ID
-                            and message.content.lower() == question_data["answer"].lower()
+                            and normalize_and_compare_strings(message.content, ONGOING_EVENT_DATA["answer"])
                             and message.author != ctx.bot.user
                         )
 
