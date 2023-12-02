@@ -104,7 +104,6 @@ EVENTS = [
 
 # yall really made me do this - im moving this to .env, if you are running this yourself, swap the commented lines
 # (also changing the answers btw)
-#CHRISTMAS_WORDS = ["snow", "mistletoe", "jingle bells", "reindeer", "sleigh", "santa claus", "stockings", "candy cane", "tinsel", "wreath", "gingerbread", "nativity", "yule log", "nutcracker", "eggnog", "ornament", "christmas tree", "presents", "snowman", "holly", "merry", "joy", "carol", "sleigh ride", "frosty", "cider", "chimney", "tidings", "bells", "advent", "candle", "grinch", "star", "fruitcake", "fireplace", "garland", "poinsettia", "roast", "wassail", "chestnuts", "north pole", "elf", "christmas eve", "ho-ho-ho", "wise men", "drummer boy", "angel", "yuletide", "cinnamon", "jolly"]
 CHRISTMAS_WORDS = json.loads(os.environ['CHRISTMAS_WORDS'])
 
 class Points:
