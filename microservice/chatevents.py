@@ -293,7 +293,7 @@ async def realtrigger(ctx: commands.Context, event: str = "", opt_param:str = ""
 
                 await asyncio.sleep(5)
 
-                strok = "\n".join(ONGOING_EVENT_DATA["options"])
+                strok = prevent_googling("\n".join(ONGOING_EVENT_DATA["options"]))
 
                 await channel.send(
                     embed=discord.Embed(
@@ -355,7 +355,7 @@ async def realtrigger(ctx: commands.Context, event: str = "", opt_param:str = ""
 
                     await asyncio.sleep(15)
 
-                    options = '\n'.join(question_data["options"])
+                    options = prevent_googling('\n'.join(question_data["options"]))
 
                     await channel.send(
                         embed=discord.Embed(
