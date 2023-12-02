@@ -1,5 +1,3 @@
-candy_winner = 0
-
 from datetime import datetime, timedelta
 import requests
 import os
@@ -14,6 +12,8 @@ import sys
 from unidecode import unidecode
 from difflib import SequenceMatcher
 import secrets
+
+candy_winner = 0
 
 class random:
     # hi random ava person
