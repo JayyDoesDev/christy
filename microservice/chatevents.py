@@ -236,8 +236,9 @@ async def realtrigger(ctx: commands.Context, event: str = "", opt_param:str = ""
                     winner_message = await Christy.wait_for("message", check=check, timeout=60)
                     winner = winner_message.author
                     await winner_message.add_reaction("✅")
-                    await channel.send(f"{winner.mention} has won the chat event and recieved 1 Candy!")
-                    await Points.give(winner.id, 1, "unscramble")
+                    amount = random.randint(1,10)
+                    await channel.send(f"{winner.mention} has won the chat event and recieved {amount} Candy!")
+                    await Points.give(winner.id, amount, "unscramble")
                 except asyncio.TimeoutError:
                     await channel.send("No one guessed the correct answer. Event ended.")
                 
@@ -261,13 +262,14 @@ async def realtrigger(ctx: commands.Context, event: str = "", opt_param:str = ""
                         ONGOING_EVENT = False
                         ONGOING_EVENT_DATA = {}
                         await asyncio.sleep(random.randint(0,4) * .1)
+                        amount = random.randint(1,10)
                         if candy_winner == 0:
                             candy_winner = interaction.user.id
                             await interaction.response.send_message("You clicked the button!", ephemeral=True)
                             await interaction.channel.send(f"<@{candy_winner}> pressed the button first and has recieved 1 candy!")
                             await interaction.message.edit(embed=Event_Message.embeds[0], view=None)
 
-                            await Points.give(candy_winner, 1, "button")
+                        await Points.give(winner.id, amount, "unscramble")
                     else:
                         await interaction.response.send_message("Someone else has already clicked the button!", ephemeral=True)
 
@@ -314,12 +316,14 @@ async def realtrigger(ctx: commands.Context, event: str = "", opt_param:str = ""
                         winner_message = await Christy.wait_for("message", check=check, timeout=360)
                         if winner_message.channel.id == DROP_CHANNEL_ID:
                             try:
+                                amount = random.randint(1,10)
                                 if int(winner_message.content.strip()) == ONGOING_EVENT_DATA["answer"]:
                                     won = 1
                                     winner = winner_message.author
                                     await winner_message.add_reaction("✅")
-                                    await channel.send(f"{winner.mention} has won the chat event and recieved 1 Candy!")
-                                    await Points.give(winner.id, 1, "number")
+                                    
+                                    await channel.send(f"{winner.mention} has won the chat event and recieved {amount} Candy!")
+                                    await Points.give(winner.id, amount, "number")
                                 elif int(winner_message.content.strip()) < ONGOING_EVENT_DATA["answer"]:
                                     await winner_message.reply("Higher!", mention_author=False)
                                 else:
@@ -371,8 +375,9 @@ async def realtrigger(ctx: commands.Context, event: str = "", opt_param:str = ""
                     winner_message = await Christy.wait_for("message", check=check, timeout=120)
                     winner = winner_message.author
                     await winner_message.add_reaction("✅")
-                    await channel.send(f"{winner.mention} has won the chat event and recieved 1 Candy!")
-                    await Points.give(winner.id, 1, "trivia")
+                    amount = random.randint(1,10)
+                    await channel.send(f"{winner.mention} has won the chat event and recieved {amount} Candy!")
+                    await Points.give(winner.id, amount, "trivia")
                 except asyncio.TimeoutError:
                     await channel.send("No one guessed the correct answer. Event ended.")
                 
