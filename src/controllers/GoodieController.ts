@@ -16,9 +16,7 @@ export namespace GoodieController {
     }).save();
   }
 
-  export async function getUser(
-    userId: Snowflake
-  ): Promise<{
+  export async function getUser(userId: Snowflake): Promise<{
     User: string;
     presentCount: number;
     candyCount: number;
@@ -33,13 +31,16 @@ export namespace GoodieController {
     };
   }
 
-  export async function incrementPresent(userId: Snowflake): Promise<void> {
+  export async function incrementPresent(
+    userId: Snowflake,
+    customAmount?: number
+  ): Promise<void> {
     await UserModel.updateOne(
       {
         User: userId,
       },
       {
-        $inc: { presentCount: 1 },
+        $inc: { presentCount: customAmount ? customAmount : 1 },
       },
       {
         new: true,
@@ -47,13 +48,50 @@ export namespace GoodieController {
     );
   }
 
-  export async function incrementCandy(userId: Snowflake, customAmount?: number): Promise<void> {
+  export async function incrementCandy(
+    userId: Snowflake,
+    customAmount?: number
+  ): Promise<void> {
     await UserModel.updateOne(
       {
         User: userId,
       },
       {
         $inc: { candyCount: customAmount ? customAmount : 1 },
+      },
+      {
+        new: true,
+      }
+    );
+  }
+
+  export async function decrementPresent(
+    userId: Snowflake,
+    customAmount?: number
+  ): Promise<void> {
+    await UserModel.updateOne(
+      {
+        User: userId,
+      },
+      {
+        $inc: { presentCount: customAmount ? customAmount : -1 },
+      },
+      {
+        new: true,
+      }
+    );
+  }
+
+  export async function decrementCandy(
+    userId: Snowflake,
+    customAmount?: number
+  ): Promise<void> {
+    await UserModel.updateOne(
+      {
+        User: userId,
+      },
+      {
+        $inc: { candyCount: customAmount ? customAmount : -1 },
       },
       {
         new: true,

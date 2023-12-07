@@ -55,7 +55,7 @@ export function getGoodie(goodie: string): Goodie {
     }
   }
 }
-export function randomGoodie(type?: "present" | "candy"): string {
+export function randomGoodie(type?: "present" | "candy" | string): string {
   const shuffled: {
     technicalName: string;
     type: string;
