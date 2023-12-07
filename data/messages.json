@@ -3,7 +3,7 @@
   "cooldown": "**You’re going too fast, sweet thing!~ Wait there a little more for me, will ya? :heart:**",
   "cmds": {
     "ping": {
-      "ping": "Oh you pinged me! Silly, I'll always be right here waiting for you.~"
+      "ping": "**Oh you pinged me! Silly, I'll always be right here waiting for you.~**"
     },
     "claim": {
       "error": "**Eep! Hey, sugarplum. Looks like the code you gave me isn't working... I think someone else might have beaten you to it! That's okay, wait a little and I'll make sure another one drops soon!~ ;)**",
@@ -30,6 +30,15 @@
     },
     "about": {
       "aboutDescription": "Hello there! I'm Marie, your festive companion, spreading holiday cheer with a touch of magic.\n\n🎄✨ I'm here to infuse your holiday season with joy through a collection of delightful commands.\n\nLet the merriment begin! 🌟"
+    },
+    "give": {
+      "giveSelf": "**You can't gift your self!??!!**",
+      "giveMe": "**Thank you for thinking about me :heart:**",
+      "giveBot": "**You can't gift bots!**",
+      "emptyPresent": "**It looks like you don't have any presents! <:akariWorry:904354078325370951>**",
+      "emptyCandy": "**It looks like you don't have any candy! <:akariWorry:904354078325370951>**",
+      "gave": "**{randomGoodie} {author} gave {user} 1 {goodie}! Enjoy!!!**",
+      "emptyInventory": "**:sob: Your inventory is empty!**"
     }
   },
   "footer": "Created by the NTTS Event team, Merry Christmas!"
