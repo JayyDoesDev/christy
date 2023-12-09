@@ -262,14 +262,15 @@ async def realtrigger(ctx: commands.Context, event: str = "", opt_param:str = ""
                         ONGOING_EVENT = False
                         ONGOING_EVENT_DATA = {}
                         await asyncio.sleep(random.randint(0,4) * .1)
-
                         if candy_winner == 0:
-                            candy_winner = interaction.user.id
+                            candy_winner = interaction.user_id
                             await interaction.response.send_message("You clicked the button!", ephemeral=True)
+                            amount = random.randint(1,10)
                             await interaction.channel.send(f"<@{candy_winner}> pressed the button first and has recieved {amount} candy!")
+                            await Points.give(winner.id, amount, "button")
                             await interaction.message.edit(embed=Event_Message.embeds[0], view=None)
-                        amount = random.randint(1,10)
-                        await Points.give(winner.id, amount, "unscramble")
+
+                            await Points.give(candy_winner, 1, "button")
                     else:
                         await interaction.response.send_message("Someone else has already clicked the button!", ephemeral=True)
 
