@@ -263,7 +263,7 @@ async def realtrigger(ctx: commands.Context, event: str = "", opt_param:str = ""
                         ONGOING_EVENT_DATA = {}
                         await asyncio.sleep(random.randint(0,4) * .1)
                         if candy_winner == 0:
-                            candy_winner = interaction.user_id
+                            candy_winner = interaction.user.id
                             await interaction.response.send_message("You clicked the button!", ephemeral=True)
                             amount = random.randint(1,10)
                             await interaction.channel.send(f"<@{candy_winner}> pressed the button first and has recieved {amount} candy!")
