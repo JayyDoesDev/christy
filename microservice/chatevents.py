@@ -267,10 +267,8 @@ async def realtrigger(ctx: commands.Context, event: str = "", opt_param:str = ""
                             await interaction.response.send_message("You clicked the button!", ephemeral=True)
                             amount = random.randint(1,10)
                             await interaction.channel.send(f"<@{candy_winner}> pressed the button first and has recieved {amount} candy!")
-                            await Points.give(winner.id, amount, "button")
+                            await Points.give(candy_winner, amount, "unscramble2")
                             await interaction.message.edit(embed=Event_Message.embeds[0], view=None)
-
-                            await Points.give(candy_winner, 1, "button")
                     else:
                         await interaction.response.send_message("Someone else has already clicked the button!", ephemeral=True)
 
