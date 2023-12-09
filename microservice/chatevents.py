@@ -204,7 +204,7 @@ async def trigger(ctx, event: discord.app_commands.Choice[str], opt_param:str = 
 # why is this not one command? @Marie trigger can be called via a command, while this function cannot for security and ease of calling it via code
 async def realtrigger(ctx: commands.Context, event: str = "", opt_param:str = ""):
         
-        try:
+        # try:
             global ONGOING_EVENT, ONGOING_EVENT_DATA, EVENTS, DROP_CHANNEL_ID
         
             if event.lower() == "unscramble":
@@ -427,9 +427,10 @@ async def realtrigger(ctx: commands.Context, event: str = "", opt_param:str = ""
                     )
 
                     def check(message):
+                        print("event data", ONGOING_EVENT_DATA)
                         return (
                             message.channel.id == DROP_CHANNEL_ID
-                            and normalize_and_compare_strings(message.content, fix_encoding(ONGOING_EVENT_DATA["answer"]))
+                            and normalize_and_compare_strings(message.content, fix_encoding(ONGOING_EVENT_DATA["questions"][question_number-1]["answer"]))
                             and message.author != ctx.bot.user
                         )
 
@@ -470,16 +471,18 @@ async def realtrigger(ctx: commands.Context, event: str = "", opt_param:str = ""
                     await channel.send(f"**Event Ended - <@{userid}> has won the trivia game with **{score}** points!**")
                 
                 for userid,score in leaderboard.items():
-                    await Points.give(userid, score, "trivia_game")
+                    print(f"giving score of {score} to {userid}")
+                    await Points.give(userid, int(score), "trivia_game")
+                    print("gave")
 
                 ONGOING_EVENT = False
                 ONGOING_EVENT_DATA = {}
 
-        except Exception as Error:
-            print(Error)
-            ONGOING_EVENT = False
-            ONGOING_EVENT_DATA = {}
-            print("A error occured")
+        # except Exception as Error:
+        #     print(Error)
+        #     ONGOING_EVENT = False
+        #     ONGOING_EVENT_DATA = {}
+        #     print("A error occured")
 
 @Christy.command()
 async def reload(ctx:commands.Context):
