@@ -15,14 +15,41 @@ import secrets
 
 candy_winner = 0
 
-class random:
-    # hi random ava person
-    # i already knew this was a vuln but like
-    # i wasnt expecting anyone to actually take time to exploit it
-    # anyways hope ur happy now lol
+class WordleFormatting:
+    start = "```ansi\n"
+
+    black = '[2;30m'
+
+    black = '' # dont delete the unicode character its what makes discord render it with color
+
+    yellow = "[2;33m"
+
+    green = "[2;32m"
+
+    reset = "[0m"
+
+    end = "\n```"
+
+def wordle_md(submission, answer):
+    if len(submission) > len(answer):
+        return "Your answer is too long, silly!"
     
-    # i know this is still crackable but that is going to be way harder to do
-    # istg if you crack this again im gonna change everything to http requests with authentication
+    current = WordleFormatting.start
+
+    for i in range(len(submission)):
+        if submission[i] == answer[i]:
+            current += WordleFormatting.green
+        elif submission[i] in answer:
+            current += WordleFormatting.yellow
+        else:
+            current += WordleFormatting.black
+        current += submission[i] + WordleFormatting.reset
+
+    current += WordleFormatting.end
+
+    return current
+
+class random:
 
     def randint(start, end):
         if not isinstance(start, int) or not isinstance(end, int):
@@ -91,7 +118,7 @@ DROP_CHANNEL_ID = int(get_env("DROPCHANNEL"))
 ONGOING_EVENT = False
 ONGOING_EVENT_DATA = {}
 RANDOM_EVENTS = [
-    "button", "trivia", "unscramble", "number"
+    "button", "trivia", "unscramble", "number", "wordle"
 ]
 
 EVENTS = [
@@ -99,7 +126,8 @@ EVENTS = [
     "trivia",
     "trivia_game",
     "unscramble",
-    "number"
+    "number",
+    "wordle"
 ]
 
 # yall really made me do this - im moving this to .env, if you are running this yourself, swap the commented lines
@@ -179,7 +207,8 @@ async def on_ready():
             discord.app_commands.Choice(name='Trivia Game (Multi question, put question amount in opt_param paramater)', value="trivia_game"),
             discord.app_commands.Choice(name='Button Chat Event', value="button"),
             discord.app_commands.Choice(name='Unscramble Christmas word game', value="unscramble"),
-            discord.app_commands.Choice(name='Bigger Lower Number Game', value="number")
+            discord.app_commands.Choice(name='Bigger Lower Number Game', value="number"),
+            discord.app_commands.Choice(name='Wordle Game', value="wordle")
 ])
 async def trigger(ctx, event: discord.app_commands.Choice[str], opt_param:str = ""):
         event = event.value
@@ -483,6 +512,51 @@ async def realtrigger(ctx: commands.Context, event: str = "", opt_param:str = ""
         #     ONGOING_EVENT = False
         #     ONGOING_EVENT_DATA = {}
         #     print("A error occured")
+
+
+            if event.lower() == "wordle":
+                ONGOING_EVENT = True
+                word_to_guess = unscramble.get_scramble()
+                ONGOING_EVENT_DATA["type"] = "wordle"
+                ONGOING_EVENT_DATA["answer"] = word_to_guess.lower()
+
+                channel = Christy.get_channel(DROP_CHANNEL_ID)
+
+                Event_Message = await channel.send(
+                    embed=discord.Embed(
+                        title="Wordle Event",
+                        description=f"The word is {len(word_to_guess)} letters long! Submit your answers in chat!",
+                        color=discord.Color.blurple()
+                    )
+                )
+
+                def check(message):
+                    return True
+
+                try:
+                    won = 0
+                    while won == 0:
+                        winner_message = await Christy.wait_for("message", check=check, timeout=360)
+                        if winner_message.channel.id == DROP_CHANNEL_ID:
+                            # try:
+                                amount = random.randint(1,10)
+                                if winner_message.content.strip().lower() == ONGOING_EVENT_DATA["answer"]:
+                                    won = 1
+                                    winner = winner_message.author
+                                    await winner_message.add_reaction("✅")
+                                    
+                                    await channel.send(f"{winner.mention} has won the chat event and recieved {amount} Candy!\nThe answer was {ONGOING_EVENT_DATA['answer']}")
+                                    await Points.give(winner.id, amount, "wordle")
+                                else:
+                                    if len(winner_message.content) == len(ONGOING_EVENT_DATA["answer"]):
+                                        await winner_message.reply(wordle_md(winner_message.content.lower(), ONGOING_EVENT_DATA["answer"]), mention_author=False)
+                            # except:
+                            #     ...
+                except asyncio.TimeoutError:
+                    await channel.send("No one guessed the correct answer. Event ended.")
+
+                ONGOING_EVENT = False
+                ONGOING_EVENT_DATA = {}
 
 @Christy.command()
 async def reload(ctx:commands.Context):
