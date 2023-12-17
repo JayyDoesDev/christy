@@ -516,7 +516,7 @@ async def realtrigger(ctx: commands.Context, event: str = "", opt_param:str = ""
 
             if event.lower() == "wordle":
                 ONGOING_EVENT = True
-                word_to_guess = unscramble.get_scramble()
+                word_to_guess = unscramble.get_scramble()[1]
                 ONGOING_EVENT_DATA["type"] = "wordle"
                 ONGOING_EVENT_DATA["answer"] = word_to_guess.lower()
 
