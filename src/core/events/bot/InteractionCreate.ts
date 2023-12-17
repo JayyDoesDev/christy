@@ -10,6 +10,7 @@ import {
 } from "@antibot/interactions";
 import { MessageUtil } from "../../../utils/MessageUtil";
 import { ZillaCollection } from "@antibot/zilla";
+import { GoodieController } from "../../../controllers/GoodieController";
 export default class InteractionEvent extends Event {
   constructor(ctx: Context) {
     super(ctx, {
@@ -39,9 +40,7 @@ export default class InteractionEvent extends Event {
         if (now < ex) {
           await interaction.deferReply({ ephemeral: true });
           return interaction.editReply({
-            content: MessageUtil.Error(
-              MessageUtil.Translate("cooldown")
-            ),
+            content: MessageUtil.Error(MessageUtil.Translate("cooldown")),
           }) as any;
         }
       }
@@ -72,7 +71,17 @@ export default class InteractionEvent extends Event {
           });
         }
       }
-      command.onInteraction(interaction);
+
+      if (await GoodieController.findUser(interaction.user.id)) {
+        if (await GoodieController.isBlackListed(interaction.user.id)) {
+          await interaction.deferReply({ ephemeral: true });
+          return interaction.editReply({ content: "You are blacklisted." }) as any;
+        } else {
+          command.onInteraction(interaction)
+        }
+      } else {
+        command.onInteraction(interaction);
+      }
     }
   }
 }

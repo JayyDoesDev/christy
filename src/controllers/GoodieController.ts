@@ -21,6 +21,7 @@ export namespace GoodieController {
     presentCount: number;
     candyCount: number;
     snowballCount: number;
+    blackListed: boolean;
   }> {
     const data = await UserModel.findOne({ User: userId });
     return {
@@ -28,6 +29,7 @@ export namespace GoodieController {
       presentCount: data.presentCount,
       candyCount: data.candyCount,
       snowballCount: data.snowballCount,
+      blackListed: data.blackListed
     };
   }
 
@@ -106,6 +108,43 @@ export namespace GoodieController {
       },
       {
         $inc: { snowballCount: 1 },
+      },
+      {
+        new: true,
+      }
+    );
+  }
+
+  export async function isBlackListed(userId: Snowflake): Promise<boolean> {
+    const data = await UserModel.findOne({ User: userId });
+    if (data.blackListed) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  export async function blackList(userId: Snowflake): Promise<void> {
+    await UserModel.updateOne(
+      {
+        User: userId,
+      },
+      {
+        $set: { blackListed: true },
+      },
+      {
+        new: true,
+      }
+    );
+  }
+
+  export async function whiteList(userId: Snowflake): Promise<void> {
+    await UserModel.updateOne(
+      {
+        User: userId,
+      },
+      {
+        $set: { blackListed: false },
       },
       {
         new: true,
