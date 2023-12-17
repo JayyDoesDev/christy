@@ -26,7 +26,10 @@
       "snowballCount": "**You have snowballed others {snowballCount} times! I didn't realize how vicious you are! I hope you're doing it in my honor, gumdrop.~**",
       "snowballSelf": "**My darling, I'm right here. Don't hurt yourself~ :heart:**",
       "snowballMe": "**Hmmph! I can't believe it! I was going to give you a gift~**",
-      "snowball": "**<:snowball:1169101537973387306> {authorName}** has snowballed **{mentionedUsername}**!"
+      "snowball": "**<:snowball:1169101537973387306> {authorName}** has snowballed **{mentionedUsername}**!",
+      "snowballLeaderboard": "**<:snowball:1169101537973387306> The top 10 users who have snowballed the most!**",
+      "snowballLeaderboardTitle": "Snowball Leaderboard",
+      "snowballLeaderboardDescription": "**These users seem to love snowballing people~\n:1234: Server Snowball Count: {guildSnowballCount}**\n{snowball}"
     },
     "about": {
       "aboutDescription": "Hello there! I'm Marie, your festive companion, spreading holiday cheer with a touch of magic.\n\n🎄✨ I'm here to infuse your holiday season with joy through a collection of delightful commands.\n\nLet the merriment begin! 🌟"

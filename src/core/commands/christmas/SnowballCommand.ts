@@ -7,6 +7,7 @@ import { Command } from "../../../structures/Command";
 import { Context } from "../../../structures/Context";
 import { MessageUtil } from "../../../utils/MessageUtil";
 import { GoodieController } from "../../../controllers/GoodieController";
+import UserModel from "../../../controllers/models/UserModel";
 
 export default class SnowballCommand extends Command {
   constructor(ctx: Context) {
@@ -35,6 +36,12 @@ export default class SnowballCommand extends Command {
             name: "count",
             type: ApplicationCommandOptionType.SUB_COMMAND,
             description: "Check the count of how many people you snowballed!",
+          },
+          {
+            name: "leaderboard",
+            type: ApplicationCommandOptionType.SUB_COMMAND,
+            description:
+              "View the snowball leaderboard to see who snowballed the most!",
           },
         ],
       },
@@ -96,7 +103,7 @@ export default class SnowballCommand extends Command {
           ),
         }) as any;
       }
-    } else {
+    } else if (subCommand === "user") {
       await interaction.deferReply();
       const user: User = interaction.options.getUser("user");
       if (user.id === interaction.user.id) {
@@ -126,6 +133,61 @@ export default class SnowballCommand extends Command {
           ),
         });
       }
+    } else {
+      await interaction.deferReply();
+      const collection = await UserModel.db.collection("users");
+      const documents = await collection.find({}).toArray();
+      const sorttedDocuments: Record<string, number>[] = documents.sort(
+        (a, b) => {
+          return (
+            a.snowballCount +
+            a.snowballCount -
+            (b.snowballCount + b.snowballCount)
+          );
+        }
+      );
+      return (await interaction.editReply({
+        content: MessageUtil.Success(
+          MessageUtil.Translate("cmds.snowball.snowballLeaderboard")
+        ),
+        embeds: [
+          {
+            thumbnail: {
+              url: interaction.guild.iconURL({ forceStatic: true }),
+            },
+            color: 5793266,
+            title: MessageUtil.Translate(
+              "cmds.snowball.snowballLeaderboardTitle"
+            ),
+            description: MessageUtil.Translate(
+              "cmds.snowball.snowballLeaderboardDescription"
+            ).replace(
+              "{snowball}",
+              (
+                await Promise.all(
+                  sorttedDocuments
+                    .reverse()
+                    .slice(0, 10)
+                    .map(async (x, i) => {
+                      const user = await this.ctx.users.fetch(String(x.User));
+                      return `**<:snowball:1169101537973387306> ${i + 1}. ${
+                        user.username
+                      } (${x.snowballCount})**`;
+                    })
+                )
+              ).join("\n")
+            )
+            .replace("{guildSnowballCount}", documents.reduce((x, y) => x + y.snowballCount, 0))
+            ,
+            footer: {
+              icon_url: interaction.channel.guild.iconURL({
+                forceStatic: true,
+              }),
+              text: MessageUtil.Translate("footer"),
+            },
+          },
+        ],
+      })) as any;
     }
   }
 }
