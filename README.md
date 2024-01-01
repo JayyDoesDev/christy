@@ -8,6 +8,10 @@
 <p align="center">
    <img src="https://github.com/JayyDoesDev/christy/blob/main/.github/assets/Discord_GArwcAEKHt.gif" alt="showcase">
 </p>
+<h2 align="center">Dashboard</h2>
+<p align="center">
+   <img src="https://github.com/JayyDoesDev/christy/blob/main/.github/assets/firefox_z2DZHnoP9c.gif" alt="showcase">
+</p>
 
 <h1 align="left">Created by the NTTS Event Team</h1>
 <h2 align="left">Event Team Directors</h2>

@@ -5,3 +5,6 @@
 <p align="center">
    <img src="https://github.com/JayyDoesDev/christy/blob/main/.github/assets/Discord_GArwcAEKHt.gif" alt="showcase">
 </p>
+<p align="center">
+   <img src="https://github.com/JayyDoesDev/christy/blob/main/.github/assets/firefox_z2DZHnoP9c.gif" alt="showcase">
+</p>
