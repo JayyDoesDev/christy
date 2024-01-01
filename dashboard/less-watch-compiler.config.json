@@ -1,0 +1,5 @@
+{
+    "watchFolder": "public/less",
+    "outputFolder": "public/css",
+    "plugins": "less-plugin-clean-css"
+}

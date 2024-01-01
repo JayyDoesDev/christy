@@ -1,0 +1,96 @@
+@import "vars.less";
+@import "root.less";
+body {
+    font-family: @defaultFont;
+    background: @backgroundColor;
+    color: @fontColor;
+    -webkit-text-stroke: 0.3px rgb(0, 0, 0);
+    margin: 0;
+}
+
+nav {
+    opacity: 0.7;
+    margin: auto auto;
+    background-color: #21242a;
+    text-align: center;
+    border-bottom-color: pink;
+    border-bottom-style: solid;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &:hover {
+        opacity: 1;
+    }
+    #ntts {
+        float: left;
+        vertical-align: middle;
+        width: 70px;
+        border-radius: 10px;
+        border-style: solid;
+        text-decoration: none; 
+    }
+
+    #cute {
+        text-align: center;
+        vertical-align: middle;
+        width: 80px;
+        margin-left: 40px;
+        text-decoration: none;
+    }
+    a {
+        text-decoration: none;
+    }
+}
+
+button {
+    font-family: @defaultFont;
+    padding: 8px 24px;
+    border-radius: 8px;
+    font-size: 30px;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px;
+    background: transparent;
+    border-color: @fontColor;
+    color: @fontColor;
+    transition: 0.4s;
+    margin-top: 10px;
+    margin-right: 9px;
+    &:hover {
+        cursor: pointer;
+        color: #8ACDD7;
+        border-color: transparent;
+        background: @fontColor;
+    }
+}
+
+#particles {
+    position: fixed;
+    width: 96%;
+    height: 96%;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+div.container {
+    line-height: 0.3px;
+    font-size: 60px;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 110px;
+    p {
+        font-size: 40px;
+    }
+    #pfp {
+        width: 240px;
+        border-color: @fontColor;
+        border-radius: 200px;
+        border-style: solid;
+        border-width: 10px;
+    }
+
+    h1 {
+        margin-top: 50px;
+    }
+}
