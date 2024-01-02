@@ -1,43 +1,45 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Home</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/victormono@latest/dist/index.min.css"
-  />
-    <link rel="stylesheet" type="text/css" href="../css/home.css">
-</head>
-
-<body>
-    <nav>
-        <a href="https://discord.gg/ntts"><img id="ntts" src="../assets/ntts.png" alt=""></a>
-        <a href="/"><img id="cute" src="https://media.discordapp.net/attachments/750828512868433940/1191195375952990232/cursor.png?ex=65a48e24&is=65921924&hm=64ac79a9a628c389a870806daf0fcecef8a2ecd1120299cb1ee453549d70d451&=&format=webp&quality=lossless&width=200&height=207" alt=""></a>
-        <% try {%>
-            <% if (cookies.hasOwnProperty("user")) { %>
-                <img id="avatar" src=<%= avatar %> alt="" style="width: 80px; border-radius: 200px; border-style: solid;">
-            <% } else{ %>  
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Leaderboard</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="../css/leaderboard.css">
+    </head>
+    <body>
+        <nav>
+            <a href="https://discord.gg/ntts"><img id="ntts" src="../assets/ntts.png" alt=""></a>
+            <a href="/"><img id="cute" src="https://media.discordapp.net/attachments/750828512868433940/1191195375952990232/cursor.png?ex=65a48e24&is=65921924&hm=64ac79a9a628c389a870806daf0fcecef8a2ecd1120299cb1ee453549d70d451&=&format=webp&quality=lossless&width=200&height=207" alt=""></a>
+            <% try {%>
+                <% if (cookies.hasOwnProperty("user")) { %>
+                    <img id="avatar" src=<%= avatar %> alt="" style="width: 80px; border-radius: 200px; border-style: solid;">
+                <% } else{ %>  
+                    <a href="/callback"><button>Login</button></a>
+                <% } %>
+            <% } catch (e)  {%>
                 <a href="/callback"><button>Login</button></a>
-            <% } %>
-        <% } catch (e)  {%>
-            <a href="/callback"><button>Login</button></a>
-        <%}%>
-    </nav>
-    <div id="particles"></div>
-    <div class="container">
-        <img id="pfp" src="https://raw.githubusercontent.com/JayyDoesDev/christy/main/.github/assets/christypfp.png"
-            alt="">
-        <h1>Christy</h1>
-        <p>(°﹏°) uhhh hi~~</p>
-        <a href="/dashboard"><button>Dashboard</button></a>
-        <a href="/leaderboard"><button>Leaderboard</button></a>
-    </div>
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+            <%}%>
+        </nav>
+        <div id="particles"></div>
+        <div class="container">
+             <img id="serverpfp" src="../assets/ntts.png" alt="" style="width: 200px; border-color: #F4BFBF; border-radius: 200px; border-style: solid; border-width: 10px;">
+             <h3>Server Leaderboard</h3>
+             <div class="board">
+                <p id="item" class="index">rank</p>
+                <p id="item" class="index">user</p>
+                <p id="item" class="index">goodie count</p>
+                <% (async () => { %>
+                    <% await Promise.all(leaderboard.reverse().slice(0, 10).map(async (x, i) => { %>
+                        <p id="item" class="index"><%= i + 1 %></p>
+                        <p id="item" class="index"><%= x.User %></p>
+                        <p id="item" class="index"><%= x.presentCount + x.candyCount %></p>
+                    <% })) %>
+                <% })() %>                
+             </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
         particlesJS("particles", {
             particles: {
@@ -145,6 +147,5 @@
             retina_detect: true,
         });
     </script>
-</body>
-
+    </body>
 </html>
